@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Ya, that's right. I got style-->
+		<style>
+			img{
+				position: absolute;
+			}
+			h1{
+				position:absolute;
+				font-size: calc(10vh);
+				font-family: Arial, Helvetica, sans-serif;
+			}
+		</style>
+		<script>
+			function applyStyles(){
+				var img = document.getElementsByTagName("img")[0];
+				var h1 = document.getElementsByTagName("h1")[0];
+				img.style.left = (window.innerWidth/2)-(img.clientWidth/2)+"px";
+				h1.style.left = (window.innerWidth/2)-(h1.clientWidth/2)+"px";
+				h1.style.top = img.clientHeight- (window.innerHeight/10) + 10 +"px";
+			}
+			
+		</script>	
+	</head>
+	<body onload="applyStyles()">
+		<img src="404 pic.jpg"/>
+		<h1>Error 404</h1>
+	</body>	
+</html>
