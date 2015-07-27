@@ -22,7 +22,7 @@
 		//make highscores
 		
 		
-        
+        var picLoaded = false;
         //var rotation = Number(localStorage.getItem("rotationVal"));
         var rotation = 0;
         var rotationPositive;
@@ -64,9 +64,7 @@
         var laser = document.getElementsByTagName("laser");
 
 
-        setInterval(function () {
-            hide();
-        }, 1);
+        
         setInterval(function () {
             updateVars();
         }, 1);
@@ -113,7 +111,7 @@
             finalZoom = 100 + zoomAmt;
             document.getElementsByTagName("background")[0].style.zoom = zoomAmt + "%";
             document.getElementsByClassName("dialog")[0].style.zoom = zoomAmt + "%";
-
+            
             //OnLoadStuff();
             
         }
@@ -409,6 +407,14 @@
             console.log("load test hello");
             //OnLoadStuff();
             moveOffenceRandom();
+            setInterval(function () {
+                hide();
+            }, 1);
+            if(!picLoaded){
+                document.getElementsByTagName("img")[0].style.display = "none";
+            }else{
+                document.getElementsByTagName("img")[0].style.display = "initial";
+            }
         };
 		
 		function pauseGame(){
@@ -466,7 +472,7 @@ input[type="range"]::-webkit-slider-thumb{
         background {
             width: 900px;
             height: 900px;
-            /*background-color: #202020;*/
+            background-color: #202020;
             position: absolute;
             top: 0px;
             left: 0px;
@@ -886,7 +892,7 @@ input[type="range"]::-webkit-slider-thumb{
 			<pause>PAUSE</pause>
 		</timeSec>
 		<volume>Volume:<volumeVal>100</volumeVal></volume>
-        <img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false">
+        <img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false" onload="picLoaded = true;">
         <input type="range" id="myRange" value="100">
     </background>
     
