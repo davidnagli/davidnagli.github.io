@@ -12,11 +12,11 @@ top:0px;
 left:0px;
 display:none;
 }
-body{
-background-color:#f9f9f9;
-}
+
+
+
 body {
-  background: #000;
+  background: #f9f9f9;
 }
 
 #load {
@@ -200,30 +200,26 @@ body {
 }
 </style>
 <script>
-isLoaded = false;
-canContinue = true;
+    function frameLoad() {
+        document.getElementById("game").style.display = "initial";
+    }
 
-function setCSS(){
-document.getElementById("game").style.height = window.innerHeight + "px";
-setTimeout(function(){ 
-if(isLoaded){
-document.getElementById("game").style.display = "initial";
-}else{
-canContinue = true;
-}
- }, 1000);
+    function setCSS() {
+    document.getElementById("game").style.height = window.innerHeight + "px";
+    }
 
-}
-function loadStuff(){
-isLoaded=true;
-if(canContinue){
+    function bodyLoad() {
+        setCSS();
+        if (window.applicationCache.status != window.applicationCache.IDLE) {
+            document.body.style.color = "#fff";
+            console.log(window.applicationCache.status);
+        }
 
-}
-}
+    }
 </script>
 </head>
 
-<body onload="setCSS()" onresize="setCSS()">
+<body onload="bodyLoad()" onresize="setCSS()">
 <div id="loader">
 <div id="load">
   <div>E</div>
@@ -232,6 +228,6 @@ if(canContinue){
   <div>E</div>
 </div>
 </div>
-<iframe id="game" src="game.html" onload="loadStuff()" frameBorder="0"></iframe>
+<iframe id="game" src="game.html" onload="frameLoad()" frameBorder="0"></iframe>
 </body>
 </html>
