@@ -200,6 +200,7 @@ body {
 }
 </style>
 <script>
+    appCache = window.applicationCache;
     function frameLoad() {
         document.getElementById("game").style.display = "initial";
     }
@@ -210,12 +211,15 @@ body {
 
     function bodyLoad() {
         setCSS();
-        console.log(window.applicationCache.status);
-    }
-    window.applicationCache.oncached() = function () {
-        console.log("Nagli Cached Event: " + window.applicationCache.status);
         
+        console.log(appCache.status);
     }
+
+    function test() {
+        console.log(appCache.status);
+    }
+
+    appCache.addEventListener('cached', test, false);
 </script>
 </head>
 
