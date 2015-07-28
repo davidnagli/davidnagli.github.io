@@ -16,11 +16,12 @@ display:none;
 
 
 body {
-  background: #000;
+  background: #f9f9f9;
 }
 
 #load {
   position: absolute;
+  display:none;
   width: 600px;
   height: 36px;
   left: 50%;
@@ -215,11 +216,12 @@ body {
     }
 
     function test() {
-        console.log("nagli: This recource was already cached");
-        document.getElementById("game").style.display = "initial";
+        console.log("nagli: This recource is downloading");
+        document.getElementById("loader").style.display = "initial";
+        document.body.style.background = "#000";
     }
 
-    appCache.addEventListener('noupdate', test, false);
+    appCache.addEventListener('downloading', test, false);
 </script>
 </head>
 
