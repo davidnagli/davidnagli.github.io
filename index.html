@@ -210,10 +210,7 @@ body {
 
     function bodyLoad() {
         setCSS();
-        if (window.applicationCache.status != window.applicationCache.IDLE) {
-            document.body.style.color = "#fff";
-            console.log(window.applicationCache.status);
-        }
+        console.log(window.applicationCache.status);
 
     }
 </script>
