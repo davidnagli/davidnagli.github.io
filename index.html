@@ -212,8 +212,9 @@ body {
         setCSS();
         console.log(window.applicationCache.status);
     }
-    document.body.oncached() = function () {
-        console.log("Nagli Cached Event: " + window.applicationCache.status)
+    window.applicationCache.oncached() = function () {
+        console.log("Nagli Cached Event: " + window.applicationCache.status);
+        
     }
 </script>
 </head>
