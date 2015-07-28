@@ -216,7 +216,7 @@ body {
 
     function test() {
         console.log("nagli: This recource was already cached");
-        window.location.replace("/game.html");
+        document.getElementById("game").style.display = "initial";
     }
 
     appCache.addEventListener('noupdate', test, false);
