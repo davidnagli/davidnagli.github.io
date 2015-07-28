@@ -1,27 +1,28 @@
 ﻿<!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en" manifest="myManifest.appcache">
+<head>
     <meta charset="utf-8">
     <title>Tank Game</title>
     <!--<link rel="stylesheet" type="text/css" href="style.css" />-->
-	<link rel="icon" type="image/png" href="icon2.png" />
-	
-	<meta name="keywords" content="Tank, Game, Tank Game, Tank Trouble, Nagli, David Nagli, HTML">
+    <link rel="icon" type="image/png" href="icon2.png" />
+
+    <meta name="keywords" content="Tank, Game, Tank Game, Tank Trouble, Nagli, David Nagli, HTML">
     <script>
-		
-	
-		
+
+
+
         //make levels
         //make tank auto spin at lvl 10 for added dificulty
         //make exeption when rotation is -90
         //fix bug were bullet speed is dependent on rotation; if rotation is closer to 90 then the bullet travels faster.
         //make bullet shoot from tip instead of center to insure bullet doesnt seem to shoot in wrong direction
-		//make volume button
-		//make exeption when abs(rot) == 90;
-		//make absoluteRotation 90 when bullet is 270 to isure bullet doesnt shoot backwards.
-		//make new game over notification
-		//make highscores
-		
-		
+        //make volume button
+        //make exeption when abs(rot) == 90;
+        //make absoluteRotation 90 when bullet is 270 to isure bullet doesnt shoot backwards.
+        //make new game over notification
+        //make highscores
+
+
         var picLoaded = false;
         //var rotation = Number(localStorage.getItem("rotationVal"));
         var rotation = 0;
@@ -49,8 +50,8 @@
         var lvl = 1;
         var paused = true;
         var time = 60;
-		var Musicplaying = false;
-        
+        var Musicplaying = false;
+
 
         var invisibleGun = document.getElementsByTagName("invisibleGun");
         var bullet = document.getElementsByTagName("bullet");
@@ -64,13 +65,13 @@
         var laser = document.getElementsByTagName("laser");
 
 
-        
+
         setInterval(function () {
             updateVars();
         }, 1);
-	    function OnLoadStuff() {
+        function OnLoadStuff() {
 
-            
+
 
             //if (localStorage.getItem("hitCount") === null) {
             //    localStorage.setItem("hitCount", 0);
@@ -79,7 +80,7 @@
             //setInterval(function() {
             //rotateGuns(1);
             //}, 10);
-            
+
             //document.getElementsByTagName("hits")[0].innerHTML = localStorage.getItem("hitCount");
             //hits = localStorage.getItem("hitCount");
             //visibleGun[0].style.transform = "rotate(" + rotation + "deg)";
@@ -88,8 +89,8 @@
             //newBullet[0].style.transform = "rotate(" + invisibleRotation + "deg)";
             //invisibleGun[0].style.transform = "rotate(" + invisibleRotation + "deg)";
             //laser[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-	    }
-        
+        }
+
         function moveOffenceRandom() {
             offenceXmin = Math.floor((Math.random() * 800) + 50);
             offenceYmin = Math.floor((Math.random() * 800) + 50);
@@ -98,7 +99,7 @@
             document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
             document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
         }
-        
+
         function zoomTest() {
             if (window.innerHeight < window.innerWidth) {
                 measure = window.innerHeight;
@@ -111,81 +112,81 @@
             finalZoom = 100 + zoomAmt;
             document.getElementsByTagName("background")[0].style.zoom = zoomAmt + "%";
             document.getElementsByClassName("dialog")[0].style.zoom = zoomAmt + "%";
-            
+
             //OnLoadStuff();
-            
+
         }
-        
+
         function fadeObjects() {
             OnLoadStuff();
-			Musicplaying = true;
+            Musicplaying = true;
             document.getElementById('bgMusic').play();
             //setTimeout(function() {
-                //offence[0].style.opacity = 1;
-                //visibleGun[0].style.opacity = 1;
-                //document.getElementsByTagName("tank")[0].style.opacity = 1;
-                //document.getElementsByTagName("leftJet")[0].style.opacity = 1;
-                //document.getElementsByTagName("rightJet")[0].style.opacity = 1;
-                //document.getElementsByTagName("level")[0].style.opacity = 0.3;
-                //document.getElementsByTagName("time")[0].style.opacity = 0.3;
-                document.getElementsByClassName("dialog")[0].style.opacity = 0;
-            
-			
-            	document.getElementsByTagName("input")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("img")[0].style.webkitFilter = "blur(0px)";
-				document.getElementsByTagName("timeSec")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("volume")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("level")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("score")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("offence")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("leftJet")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("rightJet")[0].style.webkitFilter = "blur(0px)";
-                document.getElementsByTagName("tank")[0].style.webkitFilter = "blur(0px)";
-                visibleGun[0].style.webkitFilter = "blur(0px)";
+            //offence[0].style.opacity = 1;
+            //visibleGun[0].style.opacity = 1;
+            //document.getElementsByTagName("tank")[0].style.opacity = 1;
+            //document.getElementsByTagName("leftJet")[0].style.opacity = 1;
+            //document.getElementsByTagName("rightJet")[0].style.opacity = 1;
+            //document.getElementsByTagName("level")[0].style.opacity = 0.3;
+            //document.getElementsByTagName("time")[0].style.opacity = 0.3;
+            document.getElementsByClassName("dialog")[0].style.opacity = 0;
+
+
+            document.getElementsByTagName("input")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("img")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("timeSec")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("volume")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("level")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("score")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("offence")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("leftJet")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("rightJet")[0].style.webkitFilter = "blur(0px)";
+            document.getElementsByTagName("tank")[0].style.webkitFilter = "blur(0px)";
+            visibleGun[0].style.webkitFilter = "blur(0px)";
             //}, 0);
-            setTimeout(function() {
+            setTimeout(function () {
                 //document.getElementsByClassName("dialog")[0].style.display = "none";
                 paused = false;
             }, 6000);
-            setTimeout(function(){
-				paused=false;
+            setTimeout(function () {
+                paused = false;
                 document.getElementsByTagName("time")[0].innerHTML = "00:" + time;
-                var timer = setInterval(function(){
+                var timer = setInterval(function () {
 
-                    if(time === 0){
-						
+                    if (time === 0) {
+
                         paused = true;
-						/*var newGame = confirm("Game Over. You score is " + hits + ". Would you like to start a new game?")
+                        /*var newGame = confirm("Game Over. You score is " + hits + ". Would you like to start a new game?")
 						if(newGame){
 							location.reload();
 						}*/
-						
-						document.getElementsByClassName("dialog")[0].style.opacity = 1;
-						document.getElementById("notifTitle").innerHTML = "Game Over!";
-						document.getElementById("notifContent").innerHTML = "Would you like to begin a new game?"
-						//showConfirm();
-						console.log("game over?");
-						clearInterval(timer);
-                    }else if(!paused){
-						time --;
-                    	document.getElementsByTagName("time")[0].innerHTML = "00:" + time;
-					}
+
+                        document.getElementsByClassName("dialog")[0].style.opacity = 1;
+                        document.getElementById("notifTitle").innerHTML = "Game Over!";
+                        document.getElementById("notifContent").innerHTML = "Would you like to begin a new game?"
+                        //showConfirm();
+                        console.log("game over?");
+                        clearInterval(timer);
+                    } else if (!paused) {
+                        time--;
+                        document.getElementsByTagName("time")[0].innerHTML = "00:" + time;
+                    }
 
                 }, 1000)
-            },4000);
+            }, 4000);
         }
         function updateVars() {
             rangeVal = document.getElementById("myRange").value;
-			volume = rangeVal / 100;
-			document.getElementById('bgMusic').volume = volume;
-			document.getElementById('shootSound').volume = volume / 2;
-			
+            volume = rangeVal / 100;
+            document.getElementById('bgMusic').volume = volume;
+            document.getElementById('shootSound').volume = volume / 2;
+
             rotationVar[0].innerHTML = "innerheight: " + window.innerHeight;
             rotationPositiveVar[0].innerHTML = "xVal: " + xVal + "<br/>yVal: " + yVal;
             canShootVar[0].innerHTML = "hits: " + hits + "<br/> offenceOpacity: " + offenceOpacity + "<br/> absoluteRotation: " + absoluteRotation + "<br/> rotSpeed: " + rotSpeed + "<br/> Musicplaying: " + Musicplaying + "<br/>paused: " + paused + "<br/> rangeVal: " + rangeVal + "<br> volume: " + volume;
-			
-			
-            
+
+
+
         }
 
         function rotateGuns(amount) {
@@ -216,14 +217,14 @@
             }else{
                 speed = 2;
             }
-            
+
             if(rotation == 90 || rotation == -90){
                 //console.log(rotation);
                 rotation += 1;
-                
+
             }
                 */
-                
+
         }
 
         function stop() {
@@ -281,20 +282,20 @@
                     stoped = true;
                     offence[0].style.opacity = 0;
                     localStorage.setItem("hitCount", hits);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         offence[0].style.opacity = 1;
                         //document.getElementsByTagName("hits")[0].innerHTML = localStorage.getItem("hitCount");
                         document.getElementsByTagName("hits")[0].innerHTML = hits;
                         moveOffenceRandom();
-                    },100)
-                    if(hits % 10 == 0){
+                    }, 100)
+                    if (hits % 10 == 0) {
                         //if(hits/10 != 1){
-                        lvl = (hits/10) + 1;
+                        lvl = (hits / 10) + 1;
                         //}
                         document.getElementsByTagName("lvl")[0].innerHTML = lvl;
-                        console.log("Congrats you have reached level " + lvl)   
+                        console.log("Congrats you have reached level " + lvl)
                     }
-                    
+
                 }
                 if (xVal < 901 && xVal > 0 && yVal < 901 && yVal > 0 && !stoped && !paused) {
                     newShoot(i);
@@ -303,7 +304,7 @@
                 }
             }, 1)
         }
-        
+
 
         function shoot() {
             if (canShoot) {
@@ -317,7 +318,7 @@
                 newBullet[0].style.opacity = 1;
                 newShoot(i);
                 canShoot = false;
-                
+
             }
         }
 
@@ -349,20 +350,20 @@
             if (keyPressed == false) {
                 if (event.keyCode == 39) {
                     aRotate = setInterval(function () {
-                        if(!paused){
+                        if (!paused) {
                             rotateGuns(1)
-							//visibleGun[0].focus()
-							document.getElementsByTagName("input")[0].blur();
+                            //visibleGun[0].focus()
+                            document.getElementsByTagName("input")[0].blur();
                         }
                     }, rotSpeed);
                     keyPressed = true;
                     //hide();
                 } else if (event.keyCode == 37) {
                     bRotate = setInterval(function () {
-                        if(!paused){
+                        if (!paused) {
                             rotateGuns(-1)
-							//visibleGun[0].focus();
-							document.getElementsByTagName("input")[0].blur();
+                            //visibleGun[0].focus();
+                            document.getElementsByTagName("input")[0].blur();
                         }
                     }, rotSpeed);
                     keyPressed = true;
@@ -401,8 +402,8 @@
         function gunClick() {
             laser[0].style.display = "initial"
         }
-		
-        window.onload = function() {
+
+        window.onload = function () {
             document.body.focus();
             console.log("load test hello");
             //OnLoadStuff();
@@ -410,65 +411,62 @@
             setInterval(function () {
                 hide();
             }, 1);
-            if(!picLoaded){
+            if (!picLoaded) {
                 document.getElementsByTagName("img")[0].style.display = "none";
-            }else{
+            } else {
                 document.getElementsByTagName("img")[0].style.display = "initial";
             }
         };
-		
-		function pauseGame(){
-			paused = !paused;
-			
-			if(Musicplaying){
-				document.getElementById('bgMusic').pause();
-			}else{
-				document.getElementById('bgMusic').play();
-			}
-			Musicplaying = !Musicplaying;
-		}
-		
+
+        function pauseGame() {
+            paused = !paused;
+
+            if (Musicplaying) {
+                document.getElementById('bgMusic').pause();
+            } else {
+                document.getElementById('bgMusic').play();
+            }
+            Musicplaying = !Musicplaying;
+        }
+
     </script>
     <style>
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 230px;
+            height: 10px;
+            background: #202020;
+            position: absolute;
+            top: 50px;
+            left: 495px;
+            margin: auto;
+            outline: none;
+            z-index: 50;
+            box-shadow: inset 0px 0px 6px -1px rgba(0,0,0,0.75);
+            -webkit-transition: -webkit-filter 6000ms linear;
+            -webkit-filter: blur(10px);
+        }
 
-		
-input[type="range"]{
-  -webkit-appearance:none;
-  width:230px;
-  height:10px;
-  background: #202020;
-  position: absolute;
-  top: 50px;
-  left: 495px;
-  margin: auto;
-  outline: none;
-	z-index: 50;
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 15px;
+                height: 15px;
+                border-radius: 100%;
+                background: #434343;
+                position: relative;
+                border: 3px solid aquamarine;
+                z-index: 3;
+                cursor: pointer;
+            }
 
-box-shadow: inset 0px 0px 6px -1px rgba(0,0,0,0.75);
-	            -webkit-transition : -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px); 
-}
+                input[type="range"]::-webkit-slider-thumb:active {
+                    width: 20px;
+                    height: 20px;
+                    transition: width 10ms;
+                    transition: height 10ms;
+                }
 
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none;
-  width:15px;
-  height:15px;
-  border-radius: 100%;
-  background: #434343;
-  position:relative;
-  border: 3px solid aquamarine;
-  z-index:3;
-  cursor: pointer;
-}
-		input[type="range"]::-webkit-slider-thumb:active{
-			width:20px;
-			height:20px;
-			transition: width 10ms;
-			transition: height 10ms;
-			
-		}
-		
-		
+
         background {
             width: 900px;
             height: 900px;
@@ -488,8 +486,8 @@ input[type="range"]::-webkit-slider-thumb{
             top: 425px;
             left: 425px;
             z-index: 2;
-            opacity:1;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            opacity: 1;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
 
@@ -527,8 +525,8 @@ input[type="range"]::-webkit-slider-thumb{
             left: 450px;
             transform-origin: left;
             z-index: 3;
-            opacity:1;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            opacity: 1;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
 
@@ -545,15 +543,15 @@ input[type="range"]::-webkit-slider-thumb{
 
         leftJet {
             left: 475px;
-            opacity:1;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            opacity: 1;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
 
         rightJet {
             left: 415px;
-            opacity:1;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            opacity: 1;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
 
@@ -580,37 +578,41 @@ input[type="range"]::-webkit-slider-thumb{
             visibility: visible;
             opacity: 0;
         }
-        Left{
-            position:absolute;
-            background-color:yellow;
+
+        Left {
+            position: absolute;
+            background-color: yellow;
             width: 450px;
-            height:900px;
-            top:0px;
-            left:0px;
-            z-index:6;
-            opacity:0;
+            height: 900px;
+            top: 0px;
+            left: 0px;
+            z-index: 6;
+            opacity: 0;
         }
-        Right{
-            position:absolute;
-            background-color:red;
+
+        Right {
+            position: absolute;
+            background-color: red;
             width: 450px;
-            height:900px;
-            top:0px;
-            left:450px;
-            z-index:6;
-            opacity:0;
+            height: 900px;
+            top: 0px;
+            left: 450px;
+            z-index: 6;
+            opacity: 0;
         }
-        Shoot{
-            position:absolute;
-            background-color:green;
+
+        Shoot {
+            position: absolute;
+            background-color: green;
             width: 100px;
-            height:100px;
-            top:400px;
-            left:400px;
-            z-index:6;
-            opacity:0;
-            border-radius:100%;
+            height: 100px;
+            top: 400px;
+            left: 400px;
+            z-index: 6;
+            opacity: 0;
+            border-radius: 100%;
         }
+
         offence {
             width: 30px;
             height: 30px;
@@ -619,8 +621,8 @@ input[type="range"]::-webkit-slider-thumb{
             z-index: 5;
             left: 50px;
             top: 600px;
-            opacity:1;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            opacity: 1;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
 
@@ -646,15 +648,15 @@ input[type="range"]::-webkit-slider-thumb{
             top: 10px;
             left: 10px;
             font-weight: bold;
-            z-index:7;
-            cursor:pointer;
-            opacity:0.3;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            z-index: 7;
+            cursor: pointer;
+            opacity: 0.3;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
-        
-        level{
-            position:absolute;
+
+        level {
+            position: absolute;
             color: #ffffff;
             font-family: "Courier New";
             font-size: 40px;
@@ -662,39 +664,38 @@ input[type="range"]::-webkit-slider-thumb{
             opacity: 0.3;
             z-index: 7;
             left: 250px;
-            top:10px;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            top: 10px;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
-        
-        timeSec{
-            position:absolute;
+
+        timeSec {
+            position: absolute;
             color: #ffffff;
             font-family: "Courier New";
-            
             font-weight: bold;
             opacity: 0.3;
             z-index: 7;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
-			cursor: pointer;
+            cursor: pointer;
         }
 
-		time{
-			left: 775px;
-            top:10px;
-			position:absolute;
-			font-size: 40px;
-		}
-		
-		pause{
+        time {
+            left: 775px;
+            top: 10px;
+            position: absolute;
+            font-size: 40px;
+        }
+
+        pause {
             left: 805px;
-            top:45px;
-			position:absolute;
-			font-size: 20px;
-		}
-            
-        img{
+            top: 45px;
+            position: absolute;
+            font-size: 20px;
+        }
+
+        img {
             width: 900px;
             height: 900px;
             background-color: #202020;
@@ -703,169 +704,162 @@ input[type="range"]::-webkit-slider-thumb{
             left: 0px;
             z-index: 0;
             overflow: hidden;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
         }
-		
-		timeSec:hover{
-			opacity: 0.4;
-		}
-		
-		volume{
-			position:absolute;
+
+        timeSec:hover {
+            opacity: 0.4;
+        }
+
+        volume {
+            position: absolute;
             color: #ffffff;
             font-family: "Courier New";
             font-weight: bold;
             opacity: 0.3;
             z-index: 7;
-            -webkit-transition : -webkit-filter 6000ms linear;
+            -webkit-transition: -webkit-filter 6000ms linear;
             -webkit-filter: blur(10px);
-			cursor: pointer;
-			left: 490px;
-            top:10px;
-			font-size: 40px;
-		}
-		
-		
-		
-		
-        
-    body {
-      background-color: #f9f9f9;
-      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      -webkit-touch-callout: none;
-    }
-    
-    section {
-      padding: 30px 25px;
-    }
-    
-    section > * {
-      margin: 10px
-    }
-    
-    /* Button */
-    .button {
-      display: inline-block;
-      position: relative;
-      width: 120px;
-      height: 32px;
-      line-height: 32px;
-      border-radius: 2px;
-      font-size: 0.9em;
-      background-color: #fff;
-      color: #646464;
-    }
-    
-    .button > paper-ripple {
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    
-    .button.narrow {
-      width: 60px;
-    }
-    
-    
-    
-    .button.blue {
-      background-color: #4285f4;
-      color: #fff;
-    }
-    
-    
-    
-    .button.raised {
-      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      transition-delay: 0.2s;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    }
-    
-    .button.raised:active {
-      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-      transition-delay: 0s;
-    }
-    
-    /* Icon Button */
-   
-    /* FAB */
-   
-    
-    /* Menu */
+            cursor: pointer;
+            left: 490px;
+            top: 10px;
+            font-size: 40px;
+        }
 
-    /* Card, Dialog */
-    .card, .dialog {
-      position: relative;
-      display: inline-block;
-      width: 300px;
-      height: 240px;
-      vertical-align: top;
-      background-color: #fff;
-      box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
-      top:330px;
-      left:300px;
-    }
-    
-    .dialog {
-      box-sizing: border-box;
-      padding: 16px;
 
-    }
-		
-		#dialog1{
-	  		transition: opacity 1000ms;
-		}
-    
-    .dialog > .content {
-      height: 170px;
-      font-size: 0.9em;
-    }
-    
-    .dialog > .content > .title {
-      font-size: 1.3em;
-    }
-    
-    .dialog > .button {
-      width: 90px;
-      float: right;
-    }
-    
-    .card.image {
-      background: url(http://lorempixel.com/300/240/nature/);
-      color: #fff;
-    }
-    
-    /* Misc */
-    .center {
-      text-align: center;
-    }
-    
-    .label {
-      padding: 0 16px;
-    }
-    
-    .label-blue {
-      color: #4285f4; 
-    }
-    
-    .button:hover{
-        background-color: #DDDDFF;
-    }
-    .button:click{
-        background-color: #CCCCFF;
-    }
-        
-		
-		
-		
-		
-    
 
+
+
+        body {
+            background-color: #f9f9f9;
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-touch-callout: none;
+        }
+
+        section {
+            padding: 30px 25px;
+        }
+
+            section > * {
+                margin: 10px;
+            }
+
+        /* Button */
+        .button {
+            display: inline-block;
+            position: relative;
+            width: 120px;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 2px;
+            font-size: 0.9em;
+            background-color: #fff;
+            color: #646464;
+        }
+
+            .button > paper-ripple {
+                border-radius: 2px;
+                overflow: hidden;
+            }
+
+            .button.narrow {
+                width: 60px;
+            }
+
+
+
+            .button.blue {
+                background-color: #4285f4;
+                color: #fff;
+            }
+
+
+
+            .button.raised {
+                transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                transition-delay: 0.2s;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+            }
+
+                .button.raised:active {
+                    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+                    transition-delay: 0s;
+                }
+
+        /* Icon Button */
+
+        /* FAB */
+
+
+        /* Menu */
+
+        /* Card, Dialog */
+        .card, .dialog {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+            height: 240px;
+            vertical-align: top;
+            background-color: #fff;
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+            top: 330px;
+            left: 300px;
+        }
+
+        .dialog {
+            box-sizing: border-box;
+            padding: 16px;
+        }
+
+        #dialog1 {
+            transition: opacity 1000ms;
+        }
+
+        .dialog > .content {
+            height: 170px;
+            font-size: 0.9em;
+        }
+
+            .dialog > .content > .title {
+                font-size: 1.3em;
+            }
+
+        .dialog > .button {
+            width: 90px;
+            float: right;
+        }
+
+        .card.image {
+            background: url(http://lorempixel.com/300/240/nature/);
+            color: #fff;
+        }
+
+        /* Misc */
+        .center {
+            text-align: center;
+        }
+
+        .label {
+            padding: 0 16px;
+        }
+
+        .label-blue {
+            color: #4285f4;
+        }
+
+        .button:hover {
+            background-color: #DDDDFF;
+        }
+
+        .button:click {
+            background-color: #CCCCFF;
+        }
     </style>
 </head>
 <body onload="zoomTest()" onresize="zoomTest()">
@@ -887,53 +881,54 @@ input[type="range"]::-webkit-slider-thumb{
         <offence></offence>
         <score onclick="resetGame()">Score:<hits>0</hits></score>
         <level>Level:<lvl>1</lvl></level>
-		<timeSec onclick="pauseGame()">
-			<time>01:00</time>
-			<pause>PAUSE</pause>
-		</timeSec>
-		<volume>Volume:<volumeVal>100</volumeVal></volume>
+        <timeSec onclick="pauseGame()">
+            <time>01:00</time>
+            <pause>PAUSE</pause>
+        </timeSec>
+        <volume>Volume:<volumeVal>100</volumeVal></volume>
         <img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false" onload="picLoaded = true;">
         <input type="range" id="myRange" value="100">
     </background>
-    
+
     <div class="dialog" id="dialog1">
-    
-    <div class="content">
-        <div class="title" id="notifTitle">Warning!</div><br>
-        <div id="notifContent">This requires the use of headphones or speakers. Please make sure that you volume is turned on before begining the game.</div>
-        
+
+        <div class="content">
+            <div class="title" id="notifTitle">Warning!</div><br>
+            <div id="notifContent">This requires the use of headphones or speakers. Please make sure that you volume is turned on before begining the game.</div>
+
+        </div>
+
+        <div class="button label-blue" onclick="fadeObjects()">
+            <div class="center" fit>ACCEPT</div>
+            <paper-ripple fit></paper-ripple>
+        </div>
+
+        <div class="button">
+            <div class="center" fit>DECLINE</div>
+            <paper-ripple fit></paper-ripple>
+        </div>
+
     </div>
-    
-    <div class="button label-blue" onclick="fadeObjects()">
-        <div class="center" fit>ACCEPT</div>
-        <paper-ripple fit></paper-ripple>
-    </div>
-      
-    <div class="button">
-        <div class="center" fit>DECLINE</div>
-        <paper-ripple fit></paper-ripple>
-    </div>
-    
-</div>
-    
+
     <vars>
         <rotation>height: 356</rotation><br>
         <rotationpositive>xVal: 901<br>yVal: 95.64018244547049<br> offenceXmin: 360</rotationpositive><br>
         <canshoot>hits: 0<br> offenceOpacity1<br> hitCount: 0</canshoot><br>
         <yval></yval><br>
-		
-    </vars>
-    
-<audio id="shootSound">
-    <source src="sound2.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
-    
-<audio id="bgMusic">
-    <source src="music.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
-    
-<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
 
-</body></html>
+    </vars>
+
+    <audio id="shootSound">
+        <source src="sound2.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="bgMusic">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
+
+</body>
+</html>
