@@ -1,934 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en" manifest="myManifest.appcache">
 <head>
-    <meta charset="utf-8">
-    <title>Tank Game</title>
-    <!--<link rel="stylesheet" type="text/css" href="style.css" />-->
-    <link rel="icon" type="image/png" href="icon2.png" />
-
-    <meta name="keywords" content="Tank, Game, Tank Game, Tank Trouble, Nagli, David Nagli, HTML">
-    <script>
-
-
-
-        //make levels
-        //make tank auto spin at lvl 10 for added dificulty
-        //make exeption when rotation is -90
-        //fix bug were bullet speed is dependent on rotation; if rotation is closer to 90 then the bullet travels faster.
-        //make bullet shoot from tip instead of center to insure bullet doesnt seem to shoot in wrong direction
-        //make volume button
-        //make exeption when abs(rot) == 90;
-        //make absoluteRotation 90 when bullet is 270 to isure bullet doesnt shoot backwards.
-        //make new game over notification
-        //make highscores
-
-
-        var picLoaded = false;
-        //var rotation = Number(localStorage.getItem("rotationVal"));
-        var rotation = 0;
-        var rotationPositive;
-        var invisibleRotation;
-        var canShoot = true;
-        var yVal;
-        var xVal = originalXVal;
-        var originalXVal = 450;
-        var originalYVal = 448;
-        var toAddToX;
-        var tanVal;
-        var i = 1;
-        var speed = 2;
-        var absoluteRotation = Math.abs(rotation);
-        var hits = 0;
-        var offenceWidth = 35;
-        //var offenceXmin = Math.floor((Math.random() * 800) + 50);
-        //var offenceYmin = Math.floor((Math.random() * 800) + 50);
-        //var offenceXmax = offenceXmin + offenceWidth;
-        //var offenceYmax = offenceYmin + offenceWidth;
-        var offenceOpacity = 1;
-        var moveRight = true;
-        var rotSpeed = 5;
-        var lvl = 1;
-        var paused = true;
-        var time = 60;
-        var Musicplaying = false;
-
-
-        var invisibleGun = document.getElementsByTagName("invisibleGun");
-        var bullet = document.getElementsByTagName("bullet");
-        var visibleGun = document.getElementsByTagName("visibleGun");
-        var rotationVar = document.getElementsByTagName("rotation");
-        var rotationPositiveVar = document.getElementsByTagName("rotationPositive");
-        var canShootVar = document.getElementsByTagName("canShoot");
-        var yValVar = document.getElementsByTagName("yVal");
-        var newBullet = document.getElementsByTagName("newBullet");
-        var offence = document.getElementsByTagName("offence");
-        var laser = document.getElementsByTagName("laser");
-
-
-
-        setInterval(function () {
-            updateVars();
-        }, 1);
-        function OnLoadStuff() {
-
-
-
-            //if (localStorage.getItem("hitCount") === null) {
-            //    localStorage.setItem("hitCount", 0);
-            //}
-
-            //setInterval(function() {
-            //rotateGuns(1);
-            //}, 10);
-
-            //document.getElementsByTagName("hits")[0].innerHTML = localStorage.getItem("hitCount");
-            //hits = localStorage.getItem("hitCount");
-            //visibleGun[0].style.transform = "rotate(" + rotation + "deg)";
-            //invisibleRotation = rotation;
-            //absoluteRotation = Math.abs(invisibleRotation);
-            //newBullet[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-            //invisibleGun[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-            //laser[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-        }
-
-        function moveOffenceRandom() {
-            offenceXmin = Math.floor((Math.random() * 800) + 50);
-            offenceYmin = Math.floor((Math.random() * 800) + 50);
-            offenceXmax = offenceXmin + offenceWidth;
-            offenceYmax = offenceYmin + offenceWidth;
-            document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
-            document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
-        }
-
-        function zoomTest() {
-            if (window.innerHeight < window.innerWidth) {
-                measure = window.innerHeight;
-            } else {
-                measure = window.innerWidth;
-
-            }
-
-            zoomAmt = (measure * 100) / 900;
-            finalZoom = 100 + zoomAmt;
-            document.getElementsByTagName("background")[0].style.zoom = zoomAmt + "%";
-            document.getElementsByClassName("dialog")[0].style.zoom = zoomAmt + "%";
-
-            //OnLoadStuff();
-
-        }
-
-        function fadeObjects() {
-            OnLoadStuff();
-            Musicplaying = true;
-            document.getElementById('bgMusic').play();
-            //setTimeout(function() {
-            //offence[0].style.opacity = 1;
-            //visibleGun[0].style.opacity = 1;
-            //document.getElementsByTagName("tank")[0].style.opacity = 1;
-            //document.getElementsByTagName("leftJet")[0].style.opacity = 1;
-            //document.getElementsByTagName("rightJet")[0].style.opacity = 1;
-            //document.getElementsByTagName("level")[0].style.opacity = 0.3;
-            //document.getElementsByTagName("time")[0].style.opacity = 0.3;
-            document.getElementsByClassName("dialog")[0].style.opacity = 0;
-
-
-            document.getElementsByTagName("input")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("img")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("timeSec")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("volume")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("level")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("score")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("offence")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("leftJet")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("rightJet")[0].style.webkitFilter = "blur(0px)";
-            document.getElementsByTagName("tank")[0].style.webkitFilter = "blur(0px)";
-            visibleGun[0].style.webkitFilter = "blur(0px)";
-            //}, 0);
-            setTimeout(function () {
-                //document.getElementsByClassName("dialog")[0].style.display = "none";
-                paused = false;
-            }, 6000);
-            setTimeout(function () {
-                paused = false;
-                document.getElementsByTagName("time")[0].innerHTML = "00:" + time;
-                var timer = setInterval(function () {
-
-                    if (time === 0) {
-
-                        paused = true;
-                        /*var newGame = confirm("Game Over. You score is " + hits + ". Would you like to start a new game?")
-						if(newGame){
-							location.reload();
-						}*/
-
-                        document.getElementsByClassName("dialog")[0].style.opacity = 1;
-                        document.getElementById("notifTitle").innerHTML = "Game Over!";
-                        document.getElementById("notifContent").innerHTML = "Would you like to begin a new game?"
-                        //showConfirm();
-                        console.log("game over?");
-                        clearInterval(timer);
-                    } else if (!paused) {
-                        time--;
-                        document.getElementsByTagName("time")[0].innerHTML = "00:" + time;
-                    }
-
-                }, 1000)
-            }, 4000);
-        }
-        function updateVars() {
-            rangeVal = document.getElementById("myRange").value;
-            volume = rangeVal / 100;
-            document.getElementById('bgMusic').volume = volume;
-            document.getElementById('shootSound').volume = volume / 2;
-
-            rotationVar[0].innerHTML = "innerheight: " + window.innerHeight;
-            rotationPositiveVar[0].innerHTML = "xVal: " + xVal + "<br/>yVal: " + yVal;
-            canShootVar[0].innerHTML = "hits: " + hits + "<br/> offenceOpacity: " + offenceOpacity + "<br/> absoluteRotation: " + absoluteRotation + "<br/> rotSpeed: " + rotSpeed + "<br/> Musicplaying: " + Musicplaying + "<br/>paused: " + paused + "<br/> rangeVal: " + rangeVal + "<br> volume: " + volume;
-
-
-
-        }
-
-        function rotateGuns(amount) {
-            rotationPositive = rotation * -1;
-
-            //insures that rotation never surpasses
-            if (rotationPositive === 360 || rotationPositive === -360) {
-                rotation = 0;
-            } else {
-                rotation += amount;
-            }
-            visibleGun[0].style.transform = "rotate(" + rotation + "deg)";
-            if (canShoot) {
-                invisibleRotation = rotation;
-                absoluteRotation = Math.abs(invisibleRotation);
-                newBullet[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-                invisibleGun[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-                laser[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-            }
-            localStorage.setItem("rotationVal", rotation);
-            /*
-            if(absoluteRotation > 80 && absoluteRotation < 100){
-                if(absoluteRotation > 88 && absoluteRotation < 92){
-                    speed = 0.2;
-                }else{
-                    speed = 0.5;
-                }
-            }else{
-                speed = 2;
-            }
-
-            if(rotation == 90 || rotation == -90){
-                //console.log(rotation);
-                rotation += 1;
-
-            }
-                */
-
-        }
-
-        function stop() {
-            canShoot = true;
-            //bullet[0].style.transition = "initial";
-            //bullet[0].style.left = "0px";
-            newBullet[0].style.left = originalXVal + "px";
-            newBullet[0].style.top = originalYVal + "px";
-            i = 1;
-            //originalXVal = 450;
-            //originalYVal = 448;
-            newBullet[0].style.opacity = 0;
-        }
-
-        function hide() {
-            if (canShoot) {
-                invisibleRotation = rotation;
-                newBullet[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-                invisibleGun[0].style.transform = "rotate(" + invisibleRotation + "deg)";
-            }
-        }
-
-        function getY(rot) {
-            rotationPositive = rot * -1;
-            absoluteRotation = Math.abs(invisibleRotation);
-            if (absoluteRotation > 90 && absoluteRotation < 270) {
-                //gun shoots if facing LEFT
-                tanVal = Math.tan(rot * Math.PI / 180);
-            } else {
-                //gun shoots if facing RIGHT
-                tanVal = Math.tan(rotationPositive * Math.PI / 180);
-            }
-            yVal = originalYVal - (tanVal * toAddToX);
-        }
-
-        function newShoot(x) {
-            setTimeout(function () {
-                stoped = false;
-                toAddToX = x;
-                absoluteRotation = Math.abs(invisibleRotation);
-                if (absoluteRotation > 90 && absoluteRotation < 270) {
-                    //gun shoots if facing LEFT
-                    xVal = originalXVal - toAddToX;
-                } else {
-                    //gun shoots if facing RIGHT
-                    xVal = originalXVal + toAddToX;
-                }
-                getY(invisibleRotation);
-                newBullet[0].style.left = xVal + "px";
-                newBullet[0].style.top = yVal + "px";
-                i += speed;
-                if (xVal > offenceXmin && xVal < offenceXmax && yVal > offenceYmin && yVal < offenceYmax) {
-                    hits++;
-                    stop();
-                    stoped = true;
-                    offence[0].style.opacity = 0;
-                    localStorage.setItem("hitCount", hits);
-                    setTimeout(function () {
-                        offence[0].style.opacity = 1;
-                        //document.getElementsByTagName("hits")[0].innerHTML = localStorage.getItem("hitCount");
-                        document.getElementsByTagName("hits")[0].innerHTML = hits;
-                        moveOffenceRandom();
-                    }, 100)
-                    if (hits % 10 == 0) {
-                        //if(hits/10 != 1){
-                        lvl = (hits / 10) + 1;
-                        //}
-                        document.getElementsByTagName("lvl")[0].innerHTML = lvl;
-                        console.log("Congrats you have reached level " + lvl)
-                    }
-
-                }
-                if (xVal < 901 && xVal > 0 && yVal < 901 && yVal > 0 && !stoped && !paused) {
-                    newShoot(i);
-                } else {
-                    stop();
-                }
-            }, 1)
-        }
-
-
-        function shoot() {
-            if (canShoot) {
-                //bullet[0].style.transition = "left 2000ms linear";
-                //bullet[0].style.left = "637px";
-                //setTimeout(function () { stop() }, 2000);
-                document.getElementById('shootSound').pause();
-                document.getElementById('shootSound').currentTime = 0;
-                document.getElementById('shootSound').play();
-                //document.getElementById('shootSound').volume = 0.4;
-                newBullet[0].style.opacity = 1;
-                newShoot(i);
-                canShoot = false;
-
-            }
-        }
-
-        function leftDown() {
-            leftRotate = setInterval(function () {
-                rotateGuns(-1)
-            }, 3);
-        }
-
-        function leftUp() {
-            clearInterval(leftRotate);
-        }
-
-        function rightDown() {
-            rightRotate = setInterval(function () {
-                rotateGuns(1)
-            }, 3);
-        }
-
-        function rightUp() {
-            clearInterval(rightRotate);
-        }
-
-        var aRotate;
-        var bRotate;
-        var keyPressed = false;
-        var spacePressed = false;
-        addEventListener("keydown", function (event) {
-            if (keyPressed == false) {
-                if (event.keyCode == 39) {
-                    aRotate = setInterval(function () {
-                        if (!paused) {
-                            rotateGuns(1)
-                            //visibleGun[0].focus()
-                            document.getElementsByTagName("input")[0].blur();
-                        }
-                    }, rotSpeed);
-                    keyPressed = true;
-                    //hide();
-                } else if (event.keyCode == 37) {
-                    bRotate = setInterval(function () {
-                        if (!paused) {
-                            rotateGuns(-1)
-                            //visibleGun[0].focus();
-                            document.getElementsByTagName("input")[0].blur();
-                        }
-                    }, rotSpeed);
-                    keyPressed = true;
-                    //hide();
-                }
-            }
-            if (event.keyCode == 32 && canShoot && !spacePressed && !paused) {
-                shoot();
-                spacePressed = true;
-            }
-        });
-        addEventListener("keyup", function (event) {
-            if (event.keyCode == 39) {
-                clearInterval(aRotate);
-                keyPressed = false;
-            } else if (event.keyCode == 37) {
-                clearInterval(bRotate);
-                keyPressed = false;
-            }
-            if (event.keyCode == 32) {
-                spacePressed = false;
-            }
-        });
-
-        function moveOffence1() {
-
-            document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
-        }
-
-        function resetGame() {
-            localStorage.removeItem("hitCount");
-            localStorage.removeItem("rotationVal");
-            location.reload();
-        }
-
-        function gunClick() {
-            laser[0].style.display = "initial"
-        }
-
-        window.onload = function () {
-            document.body.focus();
-            console.log("load test hello");
-            //OnLoadStuff();
-            moveOffenceRandom();
-            setInterval(function () {
-                hide();
-            }, 1);
-            if (!picLoaded) {
-                document.getElementsByTagName("img")[0].style.display = "none";
-            } else {
-                document.getElementsByTagName("img")[0].style.display = "initial";
-            }
-        };
-
-        function pauseGame() {
-            paused = !paused;
-
-            if (Musicplaying) {
-                document.getElementById('bgMusic').pause();
-            } else {
-                document.getElementById('bgMusic').play();
-            }
-            Musicplaying = !Musicplaying;
-        }
-
-    </script>
-    <style>
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 230px;
-            height: 10px;
-            background: #202020;
-            position: absolute;
-            top: 50px;
-            left: 495px;
-            margin: auto;
-            outline: none;
-            z-index: 50;
-            box-shadow: inset 0px 0px 6px -1px rgba(0,0,0,0.75);
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-            input[type="range"]::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                width: 15px;
-                height: 15px;
-                border-radius: 100%;
-                background: #434343;
-                position: relative;
-                border: 3px solid aquamarine;
-                z-index: 3;
-                cursor: pointer;
-            }
-
-                input[type="range"]::-webkit-slider-thumb:active {
-                    width: 20px;
-                    height: 20px;
-                    transition: width 10ms;
-                    transition: height 10ms;
-                }
-
-
-        background {
-            width: 900px;
-            height: 900px;
-            background-color: #202020;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        tank {
-            width: 50px;
-            height: 50px;
-            background-color: #677CF5;
-            position: absolute;
-            top: 425px;
-            left: 425px;
-            z-index: 2;
-            opacity: 1;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        invisibleGun {
-            width: 50px;
-            height: 10px;
-            background-color: #FFFFFF;
-            position: absolute;
-            top: 445px;
-            left: 450px;
-            transform-origin: left;
-            z-index: 3;
-            visibility: hidden;
-        }
-
-        bullet {
-            width: 10px;
-            height: 4px;
-            background-color: #b6ff00;
-            position: absolute;
-            top: 3px;
-            left: 0px;
-            transform-origin: left;
-            z-index: 2;
-            visibility: visible;
-            opacity: 0.0;
-        }
-
-        visibleGun {
-            width: 50px;
-            height: 10px;
-            background-color: #BABFD6;
-            position: absolute;
-            top: 445px;
-            left: 450px;
-            transform-origin: left;
-            z-index: 3;
-            opacity: 1;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        .jet {
-            width: 10px;
-            height: 50px;
-            background-color: #ffffff;
-            position: absolute;
-            border-radius: 5px;
-            top: 425px;
-            z-index: 1;
-            box-shadow: 0px 5px 5px -2px #EAC530;
-        }
-
-        leftJet {
-            left: 475px;
-            opacity: 1;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        rightJet {
-            left: 415px;
-            opacity: 1;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        vars {
-            width: 300px;
-            height: 300px;
-            background-color: #ff6a00;
-            position: absolute;
-            top: 350px;
-            left: 1100px;
-            z-index: 2;
-            display: none;
-        }
-
-        newBullet {
-            width: 10px;
-            height: 4px;
-            background-color: #b6ff00;
-            position: absolute;
-            top: 448px;
-            left: 450px;
-            transform-origin: left;
-            z-index: 2;
-            visibility: visible;
-            opacity: 0;
-        }
-
-        Left {
-            position: absolute;
-            background-color: yellow;
-            width: 450px;
-            height: 900px;
-            top: 0px;
-            left: 0px;
-            z-index: 6;
-            opacity: 0;
-        }
-
-        Right {
-            position: absolute;
-            background-color: red;
-            width: 450px;
-            height: 900px;
-            top: 0px;
-            left: 450px;
-            z-index: 6;
-            opacity: 0;
-        }
-
-        Shoot {
-            position: absolute;
-            background-color: green;
-            width: 100px;
-            height: 100px;
-            top: 400px;
-            left: 400px;
-            z-index: 6;
-            opacity: 0;
-            border-radius: 100%;
-        }
-
-        offence {
-            width: 30px;
-            height: 30px;
-            background-color: #b200ff;
-            position: absolute;
-            z-index: 5;
-            left: 50px;
-            top: 600px;
-            opacity: 1;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        laser {
-            width: 5000px;
-            height: 4px;
-            background-color: red;
-            position: absolute;
-            top: 448px;
-            left: 450px;
-            transform-origin: left;
-            z-index: 50;
-            visibility: visible;
-            display: none;
-            opacity: 0.4;
-        }
-
-        score {
-            font-size: 40px;
-            color: #FFFFFF;
-            position: absolute;
-            font-family: "Courier New";
-            top: 10px;
-            left: 10px;
-            font-weight: bold;
-            z-index: 7;
-            cursor: pointer;
-            opacity: 0.3;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        level {
-            position: absolute;
-            color: #ffffff;
-            font-family: "Courier New";
-            font-size: 40px;
-            font-weight: bold;
-            opacity: 0.3;
-            z-index: 7;
-            left: 250px;
-            top: 10px;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        timeSec {
-            position: absolute;
-            color: #ffffff;
-            font-family: "Courier New";
-            font-weight: bold;
-            opacity: 0.3;
-            z-index: 7;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-            cursor: pointer;
-        }
-
-        time {
-            left: 775px;
-            top: 10px;
-            position: absolute;
-            font-size: 40px;
-        }
-
-        pause {
-            left: 805px;
-            top: 45px;
-            position: absolute;
-            font-size: 20px;
-        }
-
-        img {
-            width: 900px;
-            height: 900px;
-            background-color: #202020;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 0;
-            overflow: hidden;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-        }
-
-        timeSec:hover {
-            opacity: 0.4;
-        }
-
-        volume {
-            position: absolute;
-            color: #ffffff;
-            font-family: "Courier New";
-            font-weight: bold;
-            opacity: 0.3;
-            z-index: 7;
-            -webkit-transition: -webkit-filter 6000ms linear;
-            -webkit-filter: blur(10px);
-            cursor: pointer;
-            left: 490px;
-            top: 10px;
-            font-size: 40px;
-        }
-
-
-
-
-
-        body {
-            background-color: #f9f9f9;
-            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-            -webkit-touch-callout: none;
-        }
-
-        section {
-            padding: 30px 25px;
-        }
-
-            section > * {
-                margin: 10px;
-            }
-
-        /* Button */
-        .button {
-            display: inline-block;
-            position: relative;
-            width: 120px;
-            height: 32px;
-            line-height: 32px;
-            border-radius: 2px;
-            font-size: 0.9em;
-            background-color: #fff;
-            color: #646464;
-        }
-
-            .button > paper-ripple {
-                border-radius: 2px;
-                overflow: hidden;
-            }
-
-            .button.narrow {
-                width: 60px;
-            }
-
-
-
-            .button.blue {
-                background-color: #4285f4;
-                color: #fff;
-            }
-
-
-
-            .button.raised {
-                transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                transition-delay: 0.2s;
-                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-            }
-
-                .button.raised:active {
-                    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-                    transition-delay: 0s;
-                }
-
-        /* Icon Button */
-
-        /* FAB */
-
-
-        /* Menu */
-
-        /* Card, Dialog */
-        .card, .dialog {
-            position: relative;
-            display: inline-block;
-            width: 300px;
-            height: 240px;
-            vertical-align: top;
-            background-color: #fff;
-            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
-            top: 330px;
-            left: 300px;
-        }
-
-        .dialog {
-            box-sizing: border-box;
-            padding: 16px;
-        }
-
-        #dialog1 {
-            transition: opacity 1000ms;
-        }
-
-        .dialog > .content {
-            height: 170px;
-            font-size: 0.9em;
-        }
-
-            .dialog > .content > .title {
-                font-size: 1.3em;
-            }
-
-        .dialog > .button {
-            width: 90px;
-            float: right;
-        }
-
-        .card.image {
-            background: url(http://lorempixel.com/300/240/nature/);
-            color: #fff;
-        }
-
-        /* Misc */
-        .center {
-            text-align: center;
-        }
-
-        .label {
-            padding: 0 16px;
-        }
-
-        .label-blue {
-            color: #4285f4;
-        }
-
-        .button:hover {
-            background-color: #DDDDFF;
-        }
-
-        .button:click {
-            background-color: #CCCCFF;
-        }
-    </style>
+<title>Tank Game</title>
+<link rel="icon" type="image/png" href="icon2.png" />
+<style>
+iframe{
+width:100%;
+position:absolute;
+top:0px;
+left:0px;
+display:initial;
+}
+
+
+
+body {
+  background: #000;
+}
+
+#load {
+  position: absolute;
+  display:none;
+  width: 600px;
+  height: 36px;
+  left: 50%;
+  top: 40%;
+  margin-left: -300px;
+  overflow: visible;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+#load div {
+  position: absolute;
+  width: 20px;
+  height: 36px;
+  opacity: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  animation: move 1s linear infinite;
+  -o-animation: move 2s linear infinite;
+  -moz-animation: move 2s linear infinite;
+  -webkit-animation: move 2s linear infinite;
+  transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  color: #35C4F0;
+}
+
+#load div:nth-child(2) {
+  animation-delay: 0.2s;
+  -o-animation-delay: 0.2s;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+}
+
+#load div:nth-child(3) {
+  animation-delay: 0.4s;
+  -o-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+}
+
+#load div:nth-child(4) {
+  animation-delay: 0.6s;
+  -o-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+}
+
+#load div:nth-child(5) {
+  animation-delay: 0.8s;
+  -o-animation-delay: 0.8s;
+  -moz-animation-delay: 0.8s;
+  -webkit-animation-delay: 0.8s;
+}
+
+#load div:nth-child(6) {
+  animation-delay: 1s;
+  -o-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+}
+
+#load div:nth-child(7) {
+  animation-delay: 1.2s;
+  -o-animation-delay: 1.2s;
+  -moz-animation-delay: 1.2s;
+  -webkit-animation-delay: 1.2s;
+}
+
+@keyframes move {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  35% {
+    left: 41%;
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    left: 59%;
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    -moz-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes move {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  35% {
+    left: 41%;
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    left: 59%;
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    -moz-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes move {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  35% {
+    left: 41%;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    left: 59%;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes move {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  35% {
+    left: 41%;
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    left: 59%;
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+}
+</style>
+<script>
+    appCache = window.applicationCache;
+    function frameLoad() {
+        document.getElementById("game").style.display = "initial";
+    }
+
+    function setCSS() {
+    document.getElementById("game").style.height = window.innerHeight + "px";
+    }
+
+    function bodyLoad() {
+        setCSS();
+    }
+</script>
 </head>
-<body onload="zoomTest()" onresize="zoomTest()">
-    <background>
-        <tank></tank>
-        <invisiblegun>
-            <bullet></bullet>
 
-        </invisiblegun>
-        <visiblegun onclick="gunClick()"></visiblegun>
-        <leftjet class="jet"></leftjet>
-        <rightjet class="jet"></rightjet>
-        <newbullet></newbullet>
-
-        <left onClick="rotateGuns(-5)"></left>
-        <right onClick="rotateGuns(5)"></right>
-        <shoot onClick="shoot()"></shoot>
-        <laser></laser>
-        <offence></offence>
-        <score onclick="resetGame()">Score:<hits>0</hits></score>
-        <level>Level:<lvl>1</lvl></level>
-        <timeSec onclick="pauseGame()">
-            <time>01:00</time>
-            <pause>PAUSE</pause>
-        </timeSec>
-        <volume>Volume:<volumeVal>100</volumeVal></volume>
-        <img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false" onload="picLoaded = true;">
-        <input type="range" id="myRange" value="100">
-    </background>
-
-    <div class="dialog" id="dialog1">
-
-        <div class="content">
-            <div class="title" id="notifTitle">Warning!</div><br>
-            <div id="notifContent">This requires the use of headphones or speakers. Please make sure that you volume is turned on before begining the game.</div>
-
-        </div>
-
-        <div class="button label-blue" onclick="fadeObjects()">
-            <div class="center" fit>ACCEPT</div>
-            <paper-ripple fit></paper-ripple>
-        </div>
-
-        <div class="button">
-            <div class="center" fit>DECLINE</div>
-            <paper-ripple fit></paper-ripple>
-        </div>
-
-    </div>
-
-    <vars>
-        <rotation>height: 356</rotation><br>
-        <rotationpositive>xVal: 901<br>yVal: 95.64018244547049<br> offenceXmin: 360</rotationpositive><br>
-        <canshoot>hits: 0<br> offenceOpacity1<br> hitCount: 0</canshoot><br>
-        <yval></yval><br>
-
-    </vars>
-
-    <audio id="shootSound">
-        <source src="sound2.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <audio id="bgMusic">
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
-
+<body onload="bodyLoad()" onresize="setCSS()">
+<div id="loader">
+<div id="load">
+  <div>E</div>
+  <div>G</div>
+  <div>D</div>
+  <div>E</div>
+</div>
+</div>
+<iframe id="game" src="game.html" onload="frameLoad()" frameBorder="0"></iframe>
 </body>
 </html>
