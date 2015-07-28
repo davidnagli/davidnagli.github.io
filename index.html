@@ -16,7 +16,7 @@ display:none;
 
 
 body {
-  background: #f9f9f9;
+  background: #000;
 }
 
 #load {
@@ -211,15 +211,15 @@ body {
 
     function bodyLoad() {
         setCSS();
-        
         console.log(appCache.status);
     }
 
     function test() {
-        console.log("nagli cached event");
+        console.log("nagli: This recource was already cached");
+        window.location.replace("/game.html");
     }
 
-    appCache.addEventListener('cached', test, false);
+    appCache.addEventListener('noupdate', test, false);
 </script>
 </head>
 
