@@ -347,9 +347,16 @@
         var bRotate;
         var keyPressed = false;
         var spacePressed = false;
+        var offenceKeyPressed = false;
+        var wPressed = false;
+        var sPressed = false;
+        var aPressed = false;
+        var dPressed = false;
         addEventListener("keydown", function (event) {
+            console.log(event.keyCode);
             if (keyPressed == false) {
                 if (event.keyCode == 39) {
+                    console.log("right arrow press start");
                     aRotate = setInterval(function () {
                         if (!paused) {
                             rotateGuns(1)
@@ -375,6 +382,47 @@
                 shoot();
                 spacePressed = true;
             }
+            if (event.keyCode == 87 && !wPressed && !paused) {
+                moveUp = setInterval(function () {
+                    offenceYmin--;
+                    offenceXmax = offenceXmin + offenceWidth;
+                    offenceYmax = offenceYmin + offenceWidth;
+                    document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
+                    document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
+                }, 1)
+                wPressed = true;
+            }
+            console.log(event.keyCode == 83 && !sPressed && !paused);
+            if (event.keyCode == 83 && !sPressed && !paused) {
+                moveDown = setInterval(function () {
+                    offenceYmin++;
+                    offenceXmax = offenceXmin + offenceWidth;
+                    offenceYmax = offenceYmin + offenceWidth;
+                    document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
+                    document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
+                }, 1)
+                sPressed = true;
+            }
+            if (event.keyCode == 65 && !aPressed && !paused) {
+                moveLeft = setInterval(function () {
+                    offenceXmin--;
+                    offenceXmax = offenceXmin + offenceWidth;
+                    offenceYmax = offenceYmin + offenceWidth;
+                    document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
+                    document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
+                }, 1)
+                aPressed = true;
+            }
+            if (event.keyCode == 68 && !dPressed && !paused) {
+                moveRight = setInterval(function () {
+                    offenceXmin++;
+                    offenceXmax = offenceXmin + offenceWidth;
+                    offenceYmax = offenceYmin + offenceWidth;
+                    document.getElementsByTagName("offence")[0].style.left = offenceXmin + "px";
+                    document.getElementsByTagName("offence")[0].style.top = offenceYmin + "px";
+                }, 1)
+                dPressed = true;
+            }
         });
         addEventListener("keyup", function (event) {
             if (event.keyCode == 39) {
@@ -386,6 +434,22 @@
             }
             if (event.keyCode == 32) {
                 spacePressed = false;
+            }
+            if (event.keyCode == 87) {
+                wPressed = false;
+                clearInterval(moveUp);
+            }
+            if (event.keyCode == 83) {
+                sPressed = false;
+                clearInterval(moveDown);
+            }
+            if (event.keyCode == 65) {
+                aPressed = false;
+                clearInterval(moveLeft);
+            }
+            if (event.keyCode == 68) {
+                dPressed = false;
+                clearInterval(moveRight);
             }
         });
 
