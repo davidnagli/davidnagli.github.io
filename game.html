@@ -184,7 +184,7 @@
 
             rotationVar[0].innerHTML = "innerheight: " + window.innerHeight;
             rotationPositiveVar[0].innerHTML = "xVal: " + xVal + "<br/>yVal: " + yVal;
-            canShootVar[0].innerHTML = "hits: " + hits + "<br/> offenceOpacity: " + offenceOpacity + "<br/> absoluteRotation: " + absoluteRotation + "<br/> rotSpeed: " + rotSpeed + "<br/> Musicplaying: " + Musicplaying + "<br/>paused: " + paused + "<br/> rangeVal: " + rangeVal + "<br> volume: " + volume;
+            canShootVar[0].innerHTML = "offenceXmin: " + offenceXmin + "<br/> offenceOpacity: " + offenceOpacity + "<br/> absoluteRotation: " + absoluteRotation + "<br/> rotSpeed: " + rotSpeed + "<br/> Musicplaying: " + Musicplaying + "<br/>paused: " + paused + "<br/> rangeVal: " + rangeVal + "<br> volume: " + volume;
 
 
 
@@ -353,10 +353,8 @@
         var aPressed = false;
         var dPressed = false;
         addEventListener("keydown", function (event) {
-            console.log(event.keyCode);
             if (keyPressed == false) {
                 if (event.keyCode == 39) {
-                    console.log("right arrow press start");
                     aRotate = setInterval(function () {
                         if (!paused) {
                             rotateGuns(1)
@@ -392,7 +390,6 @@
                 }, 1)
                 wPressed = true;
             }
-            console.log(event.keyCode == 83 && !sPressed && !paused);
             if (event.keyCode == 83 && !sPressed && !paused) {
                 moveDown = setInterval(function () {
                     offenceYmin++;
@@ -424,6 +421,7 @@
                 dPressed = true;
             }
         });
+
         addEventListener("keyup", function (event) {
             if (event.keyCode == 39) {
                 clearInterval(aRotate);
@@ -435,23 +433,36 @@
             if (event.keyCode == 32) {
                 spacePressed = false;
             }
-            if (event.keyCode == 87) {
+            if (event.keyCode == 87 && !paused) {
                 wPressed = false;
                 clearInterval(moveUp);
             }
-            if (event.keyCode == 83) {
+            if (event.keyCode == 83 && !paused) {
                 sPressed = false;
                 clearInterval(moveDown);
             }
-            if (event.keyCode == 65) {
+            if (event.keyCode == 65 && !paused) {
                 aPressed = false;
                 clearInterval(moveLeft);
             }
-            if (event.keyCode == 68) {
+            if (event.keyCode == 68 && !paused) {
                 dPressed = false;
                 clearInterval(moveRight);
             }
         });
+
+        function dotCollisions() {
+            for (var i = 0; i < dotsX.length; i++) {
+                //dotsX[i];
+                //dotsY[i];
+                if (dotsX[i] > offenceXmin && dotsX[i] < offenceXmax && dotsY[i] > offenceYmin && dotsY[i] < offenceYmax) {
+                    dots[i].style.display = "none";
+                    dotsX.splice(i, 1);
+                    console.log("dot x: "+dotsX[i]);
+                    console.log("offence x: "+offenceXmin);
+                }
+            }
+        }
 
         function moveOffence1() {
 
@@ -470,7 +481,6 @@
 
         window.onload = function () {
             document.body.focus();
-            console.log("load test hello");
             //OnLoadStuff();
             moveOffenceRandom();
             setInterval(function () {
@@ -481,6 +491,28 @@
             } else {
                 document.getElementsByTagName("img")[0].style.display = "initial";
             }
+            dots = [];
+            dotsX=[];
+            dotsY=[];
+            var dotLeft = 50;
+            var dotTop = 100;
+            for (i = 0; i < 72; i++) {
+                
+                dots[i] = document.createElement("dot");
+                document.getElementsByTagName("background")[0].appendChild(dots[i]);
+                if (i % 9 == 0 && i > 0) {
+                    dotTop += 100;
+                    dotLeft = 50;
+                }
+                dotsX[i] = dotLeft;
+                dotsY[i] = dotTop;
+                //document.getElementsByTagName("dot")[i].style.left = dotLeft + "px";
+                dots[i].style.left = dotLeft + "px";
+                dots[i].style.top = dotTop + "px";
+                //console.log(dotLeft)
+                dotLeft += 100;
+            }
+            setInterval(dotCollisions, 1);
         };
 
         function pauseGame() {
@@ -494,6 +526,7 @@
             Musicplaying = !Musicplaying;
         }
 
+        
     </script>
     <style>
         input[type="range"] {
@@ -626,10 +659,10 @@
             height: 300px;
             background-color: #ff6a00;
             position: absolute;
-            top: 350px;
-            left: 1100px;
+            top: 50px;
+            left: 500px;
             z-index: 2;
-            display: none;
+            display: initial;
         }
 
         newBullet {
@@ -792,11 +825,6 @@
             top: 10px;
             font-size: 40px;
         }
-
-
-
-
-
         body {
             background-color: #f9f9f9;
             font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
@@ -807,7 +835,87 @@
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             -webkit-touch-callout: none;
         }
+        dot{
+            background: #fff;
+            width:10px;
+            height:10px;
+            position:absolute;
+            border-radius:100%;
+        }
+    </style>
+</head>
+<body onload="zoomTest()" onresize="zoomTest()">
+    <background>
+        <tank></tank>
+        <invisiblegun>
+            <bullet></bullet>
 
+        </invisiblegun>
+        <visiblegun onclick="gunClick()"></visiblegun>
+        <leftjet class="jet"></leftjet>
+        <rightjet class="jet"></rightjet>
+        <newbullet></newbullet>
+
+        <left onClick="rotateGuns(-5)"></left>
+        <right onClick="rotateGuns(5)"></right>
+        <shoot onClick="shoot()"></shoot>
+        <laser></laser>
+        <offence></offence>
+        <score onclick="resetGame()">Score:<hits>0</hits></score>
+        <level>Level:<lvl>1</lvl></level>
+        <timeSec onclick="pauseGame()">
+            <time>01:00</time>
+            <pause>PAUSE</pause>
+        </timeSec>
+        <volume>Volume:<volumeVal>100</volumeVal></volume>
+        <!--<img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false" onload="picLoaded = true;">-->
+        <img src="" draggable="false" onload="picLoaded = true;">
+        <input type="range" id="myRange" value="100">
+        
+    </background>
+
+    <div class="dialog" id="dialog1">
+
+        <div class="content">
+            <div class="title" id="notifTitle">Warning!</div><br>
+            <div id="notifContent">This requires the use of headphones or speakers. Please make sure that you volume is turned on before begining the game.</div>
+
+        </div>
+
+        <div class="button label-blue" onclick="fadeObjects()">
+            <div class="center" fit>ACCEPT</div>
+            <paper-ripple fit></paper-ripple>
+        </div>
+
+        <div class="button">
+            <div class="center" fit>DECLINE</div>
+            <paper-ripple fit></paper-ripple>
+        </div>
+
+    </div>
+
+    <vars>
+        <rotation>height: 356</rotation><br>
+        <rotationpositive>xVal: 901<br>yVal: 95.64018244547049<br> offenceXmin: 360</rotationpositive><br>
+        <canshoot>hits: 0<br> offenceOpacity1<br> hitCount: 0</canshoot><br>
+        <yval></yval><br>
+
+    </vars>
+
+    <audio id="shootSound">
+        <source src="sound2.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="bgMusic">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!--<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">-->
+
+    <style>
+        
         section {
             padding: 30px 25px;
         }
@@ -927,75 +1035,5 @@
             background-color: #CCCCFF;
         }
     </style>
-</head>
-<body onload="zoomTest()" onresize="zoomTest()">
-    <background>
-        <tank></tank>
-        <invisiblegun>
-            <bullet></bullet>
-
-        </invisiblegun>
-        <visiblegun onclick="gunClick()"></visiblegun>
-        <leftjet class="jet"></leftjet>
-        <rightjet class="jet"></rightjet>
-        <newbullet></newbullet>
-
-        <left onClick="rotateGuns(-5)"></left>
-        <right onClick="rotateGuns(5)"></right>
-        <shoot onClick="shoot()"></shoot>
-        <laser></laser>
-        <offence></offence>
-        <score onclick="resetGame()">Score:<hits>0</hits></score>
-        <level>Level:<lvl>1</lvl></level>
-        <timeSec onclick="pauseGame()">
-            <time>01:00</time>
-            <pause>PAUSE</pause>
-        </timeSec>
-        <volume>Volume:<volumeVal>100</volumeVal></volume>
-        <!--<img src="http://blog.sklambert.com/wp-content/uploads/2012/09/bg.png" draggable="false" onload="picLoaded = true;">-->
-        <img src="" draggable="false" onload="picLoaded = true;">
-        <input type="range" id="myRange" value="100">
-    </background>
-
-    <div class="dialog" id="dialog1">
-
-        <div class="content">
-            <div class="title" id="notifTitle">Warning!</div><br>
-            <div id="notifContent">This requires the use of headphones or speakers. Please make sure that you volume is turned on before begining the game.</div>
-
-        </div>
-
-        <div class="button label-blue" onclick="fadeObjects()">
-            <div class="center" fit>ACCEPT</div>
-            <paper-ripple fit></paper-ripple>
-        </div>
-
-        <div class="button">
-            <div class="center" fit>DECLINE</div>
-            <paper-ripple fit></paper-ripple>
-        </div>
-
-    </div>
-
-    <vars>
-        <rotation>height: 356</rotation><br>
-        <rotationpositive>xVal: 901<br>yVal: 95.64018244547049<br> offenceXmin: 360</rotationpositive><br>
-        <canshoot>hits: 0<br> offenceOpacity1<br> hitCount: 0</canshoot><br>
-        <yval></yval><br>
-
-    </vars>
-
-    <audio id="shootSound">
-        <source src="sound2.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <audio id="bgMusic">
-        <source src="music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!--<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">-->
-
 </body>
 </html>
