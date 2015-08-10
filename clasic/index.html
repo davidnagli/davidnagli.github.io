@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<title>Clasic Ball Game</title>
+		<style>
+			
+		</style>
+		<script>
+			var canvas;
+			var canvasContext;
+			var paddleHeight;
+			var paddle1Y = 0;
+			var fps = 60;
+			var ballX;
+			var ballY;
+			var ballSpeedX = 5;
+			var ballSpeedY = 3;
+
+			window.onresize = function () {
+			    canvas.width = window.innerWidth;
+			    canvas.height = window.innerHeight;
+			    paddleHeight = canvas.height / 5;
+			    drawEverything();
+			}
+			window.onload = function(){
+				canvas = document.getElementById("gameCanvas");
+				canvasContext = canvas.getContext("2d");
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				ballX = canvas.width / 2;
+				ballY = canvas.height / 2;
+				setInterval(drawEverything, 1000 / fps);
+				paddleHeight = canvas.height / 5;
+			}
+
+			window.onmousemove = function (evt) {
+			    var mouseX = evt.clientX;
+			    paddle1Y = evt.clientY - paddleHeight/2;
+			}
+
+			function drawEverything(){
+			    ballX += ballSpeedX;
+			    ballY += ballSpeedY;
+			    if (ballY >= canvas.height || ballY <= 0) {
+			        ballSpeedY *= -1;
+			    }
+				if(ballX>=canvas.width){
+					ballSpeedX *= -1;
+				}
+				if (ballX <= 0) {
+				    //ballSpeedX *= -1;
+				    if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+				        ballSpeedX *= -1;
+				    } else {
+				        resetBall();
+				    }
+				}
+
+				//canvas
+				makeRect(0,0,canvas.width, canvas.height, "black");
+				//ball
+				canvasContext.fillStyle = "red";
+				canvasContext.beginPath();
+				canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
+                canvasContext.fill()
+				//paddle1
+				makeRect(0,paddle1Y,10, paddleHeight, "white");
+			}
+
+			function resetBall() {
+			    ballX = canvas.width / 2;
+			    ballY = canvas.height / 2;
+			    ballSpeedX *= -1;
+			}
+
+			function makeRect(leftX, topY, width, height, color){
+				canvasContext.fillStyle = color;
+				canvasContext.fillRect(leftX,topY,width, height);
+			}
+		</script>
+	</head>
+	<body>
+		
+		<canvas id="gameCanvas" width="800" height="600" style="position:absolute;left:0px;top:0px;"/>
+	</body>
+</html>
