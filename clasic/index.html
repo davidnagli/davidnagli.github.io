@@ -8,12 +8,17 @@
 			var canvas;
 			var canvasContext;
 			var paddleHeight;
+			var paddleThickness = 10;
 			var paddle1Y = 0;
+			var paddle2Y = 0;
 			var fps = 60;
 			var ballX;
 			var ballY;
 			var ballSpeedX = 10;
 			var ballSpeedY = 5;
+			var singlePlayer = true;
+			var player1Score = 0;
+			var player2Score = 0;
 
 			window.onresize = function () {
 			    canvas.width = window.innerWidth;
@@ -30,31 +35,74 @@
 				ballY = canvas.height / 2;
 				setInterval(drawEverything, 1000 / fps);
 				paddleHeight = canvas.height / 5;
+				paddle2Y = canvas.height / 2
+				document.body.addEventListener('touchstart', function (e) {
+				    paddle1Y = e.changedTouches[0].pageY
+				}, false)
+			}
+			
+			if ('ontouchstart' in window) {
+			    var ballSpeedX = 6;
+			    var ballSpeedY = 3;
+			} else {
+			    window.onmousemove = function (evt) {
+			        paddle1Y = evt.clientY - paddleHeight / 2;
+			    }
+			}
+            
+            //AI Code
+			function computerMovement() {
+			    if (paddle2Y + (paddleHeight/2) < ballY - (paddleHeight/3)) {
+			        paddle2Y += 5;
+			    } else if (paddle2Y + (paddleHeight / 2) > ballY + (paddleHeight/3)) {
+			        paddle2Y -= 5;
+			    }
+
+                //AI for paddle 1(0 humans, for testing only)
+			    /*if (paddle1Y + (paddleHeight / 2) < ballY - (paddleHeight / 3)) {
+			        paddle1Y += 5;
+			    } else if (paddle1Y + (paddleHeight / 2) > ballY + (paddleHeight / 2)) {
+			        paddle1Y -= 5;
+			    }*/
 			}
 
-			window.onmousemove = function (evt) {
-			    var mouseX = evt.clientX;
-			    paddle1Y = evt.clientY - paddleHeight/2;
-			}
-
-			function drawEverything(){
+			function drawEverything() {
+                //if single player then use AI
+			    if (singlePlayer) {
+			        computerMovement();
+			    }
+                //move the ball by its x and y speed
 			    ballX += ballSpeedX;
 			    ballY += ballSpeedY;
+                //collision check for floor
 			    if (ballY >= canvas.height || ballY <= 0) {
 			        ballSpeedY *= -1;
 			    }
-				if(ballX>=canvas.width){
-					ballSpeedX *= -1;
+                //collision check for paddle 2(right paddle)
+				if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+				    if (ballX >= (canvas.width - paddleThickness)) {
+				        ballSpeedX *= -1;
+				        var deltaY = ballY - (paddle2Y + paddleHeight / 2);
+				        ballSpeedY = deltaY / 10;
+				    }
+                //collision check for right wall(when ballX>=canvas.width)
+				} else if (ballX >= canvas.width) {
+				    resetBall();
+				    //if ball hits right wall then left paddle(paddle 1) gets a point
+				    player1Score++
 				}
-				if (ballX <= 0) {
-				    //ballSpeedX *= -1;
-				    if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+				//collision check for paddle 1(left paddle)
+				if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+				    if (ballX <= paddleThickness) {
 				        ballSpeedX *= -1;
 				        var deltaY = ballY - (paddle1Y + paddleHeight / 2);
 				        ballSpeedY = deltaY / 10;
-				    } else {
-				        resetBall();
 				    }
+                //collision check for left wall(when ballX <= 0)
+				} else if (ballX <= 0) {
+				    resetBall();
+				    //if ball hits left wall then right paddle(paddle 2) gets a point
+                    player2Score++
 				}
 
 				//canvas
@@ -65,10 +113,16 @@
 				canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
                 canvasContext.fill()
 				//paddle1
-				makeRect(0,paddle1Y,10, paddleHeight, "white");
+                makeRect(0, paddle1Y, paddleThickness, paddleHeight, "white");
+			    //paddle2
+                makeRect(canvas.width - paddleThickness, paddle2Y, paddleThickness, paddleHeight, "white");
+                canvasContext.font = "30px Arial"
+                canvasContext.fillText(player1Score, 100, 100);
+                canvasContext.fillText(player2Score, canvas.width - 100, 100);
 			}
 
 			function resetBall() {
+                //resets the ball to the center of the canvas and reverses its X direction
 			    ballX = canvas.width / 2;
 			    ballY = canvas.height / 2;
 			    ballSpeedX *= -1;
