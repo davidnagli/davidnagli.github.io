@@ -12,8 +12,8 @@
 			var fps = 60;
 			var ballX;
 			var ballY;
-			var ballSpeedX = 5;
-			var ballSpeedY = 3;
+			var ballSpeedX = 10;
+			var ballSpeedY = 5;
 
 			window.onresize = function () {
 			    canvas.width = window.innerWidth;
@@ -50,6 +50,8 @@
 				    //ballSpeedX *= -1;
 				    if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
 				        ballSpeedX *= -1;
+				        var deltaY = ballY - (paddle1Y + paddleHeight / 2);
+				        ballSpeedY = deltaY / 10;
 				    } else {
 				        resetBall();
 				    }
