@@ -161,7 +161,7 @@
 						if(newGame){
 							location.reload();
 						}*/
-
+                        //document.getElementsByClassName("dialog")[0].style.display = "initial";
                         document.getElementsByClassName("dialog")[0].style.opacity = 1;
                         document.getElementById("notifTitle").innerHTML = "Game Over!";
                         document.getElementById("notifContent").innerHTML = "Would you like to begin a new game?"
@@ -452,7 +452,7 @@
         });
 
         function dotCollisions() {
-            for (var i = 0; i < dotsX.length; i++) {
+           /* for (var i = 0; i < dotsX.length; i++) {
                 //dotsX[i];
                 //dotsY[i];
                 if (dotsX[i] > offenceXmin && dotsX[i] < offenceXmax && dotsY[i] > offenceYmin && dotsY[i] < offenceYmax) {
@@ -461,7 +461,7 @@
                     console.log("dot x: "+dotsX[i]);
                     console.log("offence x: "+offenceXmin);
                 }
-            }
+            }*/
         }
 
         function moveOffence1() {
@@ -480,6 +480,7 @@
         }
 
         window.onload = function () {
+            fadeObjects();
             document.body.focus();
             //OnLoadStuff();
             moveOffenceRandom();
@@ -490,7 +491,7 @@
                 document.getElementsByTagName("img")[0].style.display = "none";
             } else {
                 document.getElementsByTagName("img")[0].style.display = "initial";
-            }
+            }/*
             dots = [];
             dotsX=[];
             dotsY=[];
@@ -511,7 +512,7 @@
                 dots[i].style.top = dotTop + "px";
                 //console.log(dotLeft)
                 dotLeft += 100;
-            }
+            }*/
             setInterval(dotCollisions, 1);
         };
 
@@ -662,7 +663,7 @@
             top: 50px;
             left: 500px;
             z-index: 2;
-            display: initial;
+            display: none;
         }
 
         newBullet {
@@ -882,7 +883,7 @@
 
         </div>
 
-        <div class="button label-blue" onclick="fadeObjects()">
+        <div class="button label-blue" onclick="location.reload()">
             <div class="center" fit>ACCEPT</div>
             <paper-ripple fit></paper-ripple>
         </div>
@@ -993,6 +994,8 @@
 
         #dialog1 {
             transition: opacity 1000ms;
+            opacity: 0;
+            
         }
 
         .dialog > .content {
