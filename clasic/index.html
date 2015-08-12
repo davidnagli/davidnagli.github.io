@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Clasic Ball Game</title>
+		<title>Arcade Ping Pong</title>
 		<style>
 			
 		</style>
@@ -12,14 +12,14 @@
 			var paddle1Y = 0;
 			var paddle2Y = 0;
 			var fps = 60;
-			var ballX;
-			var ballY;
-			var ballSpeedX = 10;
-			var ballSpeedY = 5;
+			var ballSpeedX = 12;
+			var ballSpeedY = 8;
 			var singlePlayer = true;
 			var player1Score = 0;
 			var player2Score = 0;
-
+			var AIlevel = 0;
+			var aiSpeed = 4;
+			var ballRadius = 10;
 			window.onresize = function () {
 			    canvas.width = window.innerWidth;
 			    canvas.height = window.innerHeight;
@@ -35,37 +35,35 @@
 				ballY = canvas.height / 2;
 				setInterval(drawEverything, 1000 / fps);
 				paddleHeight = canvas.height / 5;
-				paddle2Y = canvas.height / 2
-				document.body.addEventListener('touchstart', function (e) {
-				    paddle1Y = e.changedTouches[0].pageY
-				}, false)
+				paddle2Y = canvas.height / 2;
+				paddle1Y = canvas.height / 2;
+				if (singlePlayer) {
+				    document.body.addEventListener('touchstart', function (e) {
+				        paddle1Y = e.changedTouches[0].pageY
+				    }, false)
+				}
 			}
-			
-			if ('ontouchstart' in window) {
-			    var ballSpeedX = 6;
-			    var ballSpeedY = 3;
-			} else {
-			    window.onmousemove = function (evt) {
-			        paddle1Y = evt.clientY - paddleHeight / 2;
+			if (singlePlayer) {
+			    if ('ontouchstart' in window) {
+			        var ballSpeedX = 6;
+			        var ballSpeedY = 3;
+			    } else {
+			        window.onmousemove = function (evt) {
+			            paddle1Y = evt.clientY - paddleHeight / 2;
+			        }
 			    }
-			}
-            
+			}            
             //AI Code
 			function computerMovement() {
-			    if (paddle2Y + (paddleHeight/2) < ballY - (paddleHeight/3)) {
-			        paddle2Y += 5;
-			    } else if (paddle2Y + (paddleHeight / 2) > ballY + (paddleHeight/3)) {
-			        paddle2Y -= 5;
-			    }
-
-                //AI for paddle 1(0 humans, for testing only)
-			    /*if (paddle1Y + (paddleHeight / 2) < ballY - (paddleHeight / 3)) {
-			        paddle1Y += 5;
-			    } else if (paddle1Y + (paddleHeight / 2) > ballY + (paddleHeight / 2)) {
-			        paddle1Y -= 5;
-			    }*/
+			    if (ballY - ballRadius > ballRadius && ballY < canvas.height - ballRadius) {
+			        if (paddle2Y + (paddleHeight / 2) < ballY - (paddleHeight / 3)) {
+			            paddle2Y += 4;
+			        } else if (paddle2Y + (paddleHeight / 2) > ballY + (paddleHeight / 3)) {
+			            paddle2Y -= 4;
+			        }
+			    }//INSERT AI FOR PADDLE 1 CODE HERE:
+			    
 			}
-
 			function drawEverything() {
                 //if single player then use AI
 			    if (singlePlayer) {
@@ -74,68 +72,150 @@
                 //move the ball by its x and y speed
 			    ballX += ballSpeedX;
 			    ballY += ballSpeedY;
-                //collision check for floor
-			    if (ballY >= canvas.height || ballY <= 0) {
+                //collision check for top and bottom edges
+			    if (ballY >= canvas.height - ballRadius|| ballY <= ballRadius) {
 			        ballSpeedY *= -1;
 			    }
                 //collision check for paddle 2(right paddle)
 				if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
-				    if (ballX >= (canvas.width - paddleThickness)) {
+				    if (ballX >= (canvas.width - (paddleThickness + ballRadius))){
 				        ballSpeedX *= -1;
 				        var deltaY = ballY - (paddle2Y + paddleHeight / 2);
 				        ballSpeedY = deltaY / 10;
+				        document.getElementById("player2").play();
 				    }
                 //collision check for right wall(when ballX>=canvas.width)
 				} else if (ballX >= canvas.width) {
-				    resetBall();
-				    //if ball hits right wall then left paddle(paddle 1) gets a point
-				    player1Score++
+				    AddPoint(true);
+
 				}
 				//collision check for paddle 1(left paddle)
 				if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
-				    if (ballX <= paddleThickness) {
+				    if (ballX <= paddleThickness + ballRadius) {
 				        ballSpeedX *= -1;
 				        var deltaY = ballY - (paddle1Y + paddleHeight / 2);
 				        ballSpeedY = deltaY / 10;
+				        document.getElementById("player1").play();
+				        if (ballSpeedX >= 0 && singlePlayer) {
+				            ballSpeedX+= 0.2;
+				        } else if(singlePlayer){
+				            ballSpeedX-=0.2;
+				        }
 				    }
                 //collision check for left wall(when ballX <= 0)
 				} else if (ballX <= 0) {
-				    resetBall();
-				    //if ball hits left wall then right paddle(paddle 2) gets a point
-                    player2Score++
+				    AddPoint(false);
 				}
-
 				//canvas
 				makeRect(0,0,canvas.width, canvas.height, "black");
 				//ball
 				canvasContext.fillStyle = "red";
 				canvasContext.beginPath();
-				canvasContext.arc(ballX, ballY, 10, 0, Math.PI * 2, true);
+				canvasContext.arc(ballX, ballY, ballRadius, 0, Math.PI * 2, true);
                 canvasContext.fill()
 				//paddle1
                 makeRect(0, paddle1Y, paddleThickness, paddleHeight, "white");
 			    //paddle2
                 makeRect(canvas.width - paddleThickness, paddle2Y, paddleThickness, paddleHeight, "white");
-                canvasContext.font = "30px Arial"
+                canvasContext.font = "30px 'Courier New', Courier, monospace"
                 canvasContext.fillText(player1Score, 100, 100);
                 canvasContext.fillText(player2Score, canvas.width - 100, 100);
+                //canvasContext.fillText(ballSpeedX, canvas.width / 2, 50);
+                //canvasContext.fillText("Level", canvas.width / 2 - 35, 20);
 			}
-
+			function AddPoint(p1) {
+			    if (p1) {
+			        player1Score++;
+                } else {
+			        player2Score++;
+			        ballSpeedX *= (singlePlayer)? 0.95 : 1;
+			    }
+			    resetBall();
+			}
 			function resetBall() {
                 //resets the ball to the center of the canvas and reverses its X direction
 			    ballX = canvas.width / 2;
 			    ballY = canvas.height / 2;
 			    ballSpeedX *= -1;
+			    ballSpeedY /= 2;
 			}
-
 			function makeRect(leftX, topY, width, height, color){
 				canvasContext.fillStyle = color;
 				canvasContext.fillRect(leftX,topY,width, height);
 			}
+			var wDown = false;
+			var sDown = false;
+			var uDown = false;
+			var dDown = false;
+			window.onkeydown = function (evt) {
+                console.log(evt.keyCode)
+                if (!wDown && evt.keyCode == 87 && !singlePlayer) {
+                    wDown = true;
+                    wInterval = window.setInterval(function () { paddle1Y-= (paddle1Y >= 0) ? 3 : 0; }, 1);
+                }
+                if (!sDown && evt.keyCode == 83 && !singlePlayer) {
+                    sDown = true;
+                    sInterval = window.setInterval(function () { paddle1Y += (paddle1Y + paddleHeight <= canvas.height) ? 3 : 0; }, 1);
+                }
+                if (!uDown && evt.keyCode == 38 && !singlePlayer) {
+                    uDown = true;
+                    uInterval = window.setInterval(function () { paddle2Y -= 3; }, 1);
+                }
+                if (!dDown && evt.keyCode == 40 && !singlePlayer) {
+                    dDown = true;
+                    dInterval = window.setInterval(function () { paddle2Y += 3; }, 1);
+                }
+            }
+            window.onkeyup = function (evt) {
+                if (evt.keyCode == 87 && !singlePlayer) {
+                    wDown = false;
+                    clearInterval(wInterval)
+                }
+                if (evt.keyCode == 83 && !singlePlayer) {
+                    sDown = false;
+                    clearInterval(sInterval)
+                }
+                if (evt.keyCode == 38 && !singlePlayer) {
+                    uDown = false;
+                    clearInterval(uInterval)
+                }
+                if (evt.keyCode == 40 && !singlePlayer) {
+                    dDown = false;
+                    clearInterval(dInterval)
+                }
+            }
+            //singlePlayer = confirm("This notification is temperary. Press cancel for multiplayer and ok for singleplayer.");
 		</script>
 	</head>
 	<body>
-		
+        <audio id="player1">
+            <source src="http://s1download-universal-soundbank.com/mp3/sounds/18784.mp3" type="audio/mp3">
+        </audio>
+        <audio id="player2">
+            <source src="http://s1download-universal-soundbank.com/mp3/sounds/18782.mp3" type="audio/mp3">
+        </audio>
 		<canvas id="gameCanvas" width="800" height="600" style="position:absolute;left:0px;top:0px;"/>
 	</body>
 </html>
+<script>
+    //AI for paddle 1(0 humans, for testing only)
+    /*
+    if (ballY - ballRadius> ballRadius && ballY < canvas.height - ballRadius) {
+        if (paddle1Y + (paddleHeight / 2) < ballY - (paddleHeight / 5)) {
+            paddle1Y += 10;
+        } else if (paddle1Y + (paddleHeight / 2) > ballY + (paddleHeight / 5)) {
+            paddle1Y -= 10;
+        }
+    }
+    */
+
+    //add this to the top bunch of code definitions when coding for autocompletion to properly work
+    /*
+    var ballX;
+    var ballY;
+    var wInterval;
+	var sInterval;
+	var uInterval;
+	var dInterval;
+    */
+</script>
