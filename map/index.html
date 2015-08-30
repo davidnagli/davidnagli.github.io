@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="script.js"></script>
+		<title>David Nagli's Map Game</title>
+	</head>
+	<body>
+		<img src="bg.jpg" draggable="false"/>
+		<md class="bar"><input id="MD" class="arrowInput" onchange="checkFull()"></md>
+		<de class="bar"><input id="DE" class="arrowInput" onchange="checkFull()"></de>
+		<nj class="bar"><input id="NJ" class="arrowInput" onchange="checkFull()"></nj>
+        <ct class="bar"><input id="CT" class="arrowInput" onchange="checkFull()"></ct>
+        <ri class="bar"><input id="RI" class="arrowInput" onchange="checkFull()"></ri>
+		<ma class="bar"><input id="MA" class="arrowInput" onchange="checkFull()"></ma>
+		<nh class="bar"><input id="NH" class="arrowInput" onchange="checkFull()"></nh>
+		<vt class="bar"><input id="VT" class="arrowInput" onchange="checkFull()"></vt>
+		<button onclick="submit()" id="done">Done!</button>
+		<button onclick="resetGame()" id="reset">Reset</button>
+		<div id="form1">Hide All Unnessary States <input type="checkbox" onchange="toggleStates()" id="showHide"></div>
+		<div id="form2">
+  			What game mode do you prefer? <br/>
+  			<input type="radio" name="mode" id="quiz" onchange="pracMode = !pracMode;checkFull();"> <span>Quiz Mode</span><br>
+  			<input type="radio" name="mode" id="prac" checked onchange="pracMode = !pracMode;checkFull();"> <span>Practice Mode</span>
+		
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+

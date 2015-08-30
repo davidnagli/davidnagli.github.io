@@ -1,0 +1,368 @@
+
+body{
+	overflow: hidden;
+}
+img{
+	width: 100%;
+	position: absolute;
+	top:0%;
+	left: 0%;
+}
+
+
+
+#done{
+	position: absolute;
+	top:43vw;
+	left:53%;
+	font-size: 3vw;
+}
+
+#reset{
+	position: absolute;
+	top:43vw;
+	left:62%;
+	font-size: 3vw;
+}
+
+#form1{
+    color:black;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+#form2{
+    color:black;
+    position:absolute;
+    top:30px;
+    left:0px;
+}
+span{
+    position:relative;
+    left:30px;
+}
+
+#showHide{
+    position:absolute;
+    top:0px;
+    left:100%;
+}
+
+.bar{
+	position: absolute;
+	height: .2vw;
+	background-color: black;
+	transform-origin: left top;
+	
+}
+
+md{
+	left:77%;
+	top:21.5vw;
+	width: 10%;
+	transform: rotate(45deg);
+}
+
+de{
+	left:79%;
+	top:21.8vw;
+	width: 7%;
+	transform: rotate(40deg);
+}
+
+nj{
+	left:79.5%;
+	top:19.5vw;
+	width: 6%;
+	transform: rotate(35deg);
+}
+
+ct{
+	left:81.4%;
+	top:16vw;
+	width: 3%;
+	transform: rotate(60deg);
+}
+ri{
+	left:82.6%;
+	top:15.8vw;
+	width: 4%;
+	transform: rotate(25deg);
+}
+
+ma{
+	left:82.6%;
+	top:14.5vw;
+	width: 4%;
+	transform: rotate(0deg);
+}
+
+nh{
+	left:81.5%;
+	top:12.3vw;
+	width: 6%;
+	transform: rotate(-95deg);
+}
+
+vt{
+	left:80%;
+	top:12.3vw;
+	width: 4%;
+	transform: rotate(-95deg);
+}
+
+.arrowInput{
+	position: relative;
+	left:97%;
+	transform-origin: left top;
+}
+
+#MD{
+	transform: rotate(-45deg);
+}
+
+#DE{
+	transform: rotate(-40deg);
+}
+
+#NJ{
+	transform: rotate(-35deg);
+}
+#CT{
+	transform: rotate(-60deg);
+}
+#RI{
+	transform: rotate(-25deg);
+}
+#MA{
+	transform: rotate(0deg);
+}
+#NH{
+	transform: rotate(95deg);
+	top: -1.3vw;
+	left:115%;
+}
+#VT{
+	transform: rotate(95deg);
+	top: -1.3vw;
+	left:105%;
+}
+input{
+	position:absolute;
+	font-size: 1vw;
+	height: 1.1vw;
+	width:1.8vw;
+	text-transform: uppercase;
+	border-style: solid;
+	border-color: #000000;
+	border-width: 0.3vw;
+	outline: none;
+	font-family: Arial;
+	padding: 0.1vw;
+}
+
+#FL{
+	top: 41.5vw;
+	left: 73%;
+}
+
+#GA{
+	top: 33.5vw;
+	left: 69%;
+}
+
+#SC{
+	top: 31vw;
+	left: 72.5%;
+}
+
+#NC{
+	top: 27.5vw;
+	left: 74%;
+}
+
+#VA{
+	top: 24vw;
+	left: 74.3%;
+}
+
+#WV{
+	top: 22.6vw;
+	left: 70.7%;
+}
+
+#TN{
+	top: 28.5vw;
+	left: 64.5%;
+}
+
+#AL{
+	top: 34vw;
+	left: 64.1%;
+}
+
+#MS{
+	top: 34vw;
+	left: 59.8%;
+}
+
+#AR{
+	top: 31vw;
+	left: 55.5%;
+}
+
+#LA{
+	top: 37.2vw;
+	left: 56%;
+}
+
+#TX{
+	top: 37vw;
+	left: 46.5%;
+}
+
+#OK{
+	top: 30vw;
+	left: 49%;
+}
+
+#NM{
+	top: 31.5vw;
+	left: 37%;
+}
+
+#AZ{
+	top: 30.5vw;
+	left: 29%;
+}
+
+#CA{
+	top: 24vw;
+	left: 19%;
+}
+
+#NV{
+	top: 20.5vw;
+	left: 23.5%;
+}
+
+#UT{
+	top: 22vw;
+	left: 30.5%;
+}
+
+#CO{
+	top: 23vw;
+	left: 38%;
+}
+
+#KS{
+	top: 24.5vw;
+	left: 47.5%;
+}
+#MO{
+	top: 24.5vw;
+	left: 55%;
+}
+
+#KY{
+	top: 25.2vw;
+	left: 66%;
+}
+
+
+#ME{
+	top: 7.8vw;
+	left: 82.5%;
+}
+
+#NY{
+	top: 13.7vw;
+	left: 76.7%;
+}
+
+#PA{
+	top: 18.1vw;
+	left: 74.2%;
+}
+#OH{
+	top: 20.2vw;
+	left: 67.7%;
+}
+
+#MI{
+	top: 16vw;
+	left: 64.7%;
+}
+
+#IN{
+	top: 21.1vw;
+	left: 63.4%;
+}
+
+#IL{
+	top: 21.1vw;
+	left: 59.4%;
+}
+
+#WI{
+	top: 14.1vw;
+	left: 58.4%;
+}
+
+#NE{
+	top: 18.4vw;
+	left: 53.7%;
+}
+
+#MN{
+	top: 12vw;
+	left: 52.2%;
+}
+
+#OR{
+	top: 12vw;
+	left: 20.5%;
+}
+
+#WA{
+	top: 6.2vw;
+	left: 22.4%;
+}
+
+#ID{
+	top: 13.4vw;
+	left: 27.4%;
+}
+
+#MT{
+	top: 8.9vw;
+	left: 35.1%;
+}
+
+#WY{
+	top: 16.2vw;
+	left: 36.3%;
+}
+
+#ND{
+	top: 9.1vw;
+	left: 45.3%;
+}
+
+#SD{
+	top: 14vw;
+	left: 45.3%;
+}
+
+
+#NE{
+	top: 19.3vw;
+	left: 46.3%;
+}
+
+#IA{
+	top: 18.5vw;
+	left: 54%;
+}
