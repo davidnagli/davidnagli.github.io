@@ -1,5 +1,4 @@
-alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.")
-
+/* global wrong */
 var pracMode = true;
 
 
@@ -20,7 +19,7 @@ var extra = ["OK","NM","AZ","NV","UT","CO","ID","MT","WY","ND","SD","NE","WA"];
 
 var vals = ["FL","GA","SC","NC","VA","WV","TN","AL","MS","AR","LA","TX","CA","KS","MO","KY","ME","NY","PA","OH","MI","IN","IL","WI","MN","OR","IA"];
 
-statesAmt = 0;
+var statesAmt = 0;
 
 
 
@@ -86,7 +85,9 @@ function appendInputs(elementId){
 	var inputElement = document.createElement("input");
 	inputElement.id = elementId;
 	document.body.appendChild(inputElement);
-	inputElement.onchange = function() {checkFull()};
+	inputElement.onchange = function() {
+		checkFull()
+		};
 	}
 }
 
@@ -94,6 +95,7 @@ window.onload = function(){
 	for(var i = 0; i < vals.length; i++){
 		appendInputs(vals[i]);
 	}
+	alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
 };
 
 function checkFull(){
@@ -138,7 +140,7 @@ function checkFull(){
 }
 
 window.addEventListener("click",function(){
-//	checkFull();
+	checkFull();
 });
 
 function clearInputs(){
@@ -150,7 +152,7 @@ function clearInputs(){
 
 function endGame() {
 	
-	alert(score+" / " + vals.length + " WRONG: " + wrong);
+	alert("Score: "+score+" / " + vals.length + "\nWRONG: " + wrong);
 	score = 0;
 	for (var i = 0; i < vals.length; i++) {
 		document.getElementById(vals[i]).value = "";
