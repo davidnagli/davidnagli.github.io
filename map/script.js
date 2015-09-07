@@ -11,13 +11,13 @@ TO DO:
 	^add timer
 */
 
-var ArrowStates = ["MD","DE","NJ","CT","RI","MA","NH","VT"];
+var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH", "VT"];
 //var ArrowStates = [];
 
-var extra = ["OK","NM","AZ","NV","UT","CO","ID","MT","WY","ND","SD","NE","WA"];
+var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA"];
 
 
-var vals = ["FL","GA","SC","NC","VA","WV","TN","AL","MS","AR","LA","TX","CA","KS","MO","KY","ME","NY","PA","OH","MI","IN","IL","WI","MN","OR","IA"];
+var vals = ["FL", "GA", "SC", "NC", "VA", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "NY", "PA", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
 
 var statesAmt = 0;
 
@@ -53,97 +53,97 @@ function resetGame() {
 }
 
 
-function toggleStates(){
-    if(document.getElementById("showHide").checked){
+function toggleStates() {
+    if (document.getElementById("showHide").checked) {
         //alert("checked");
         for (var i = 0; i < extra.length; i++) {
-		    document.body.removeChild(document.getElementById(vals[vals.indexOf(extra[i])]));
-		    //vals.splice(vals.indexOf(extra[i]))
-		    //console.log(vals.indexOf(extra[i]))
-	    }
-	    
-	    for (var a = 0; a < extra.length; a++) {
-		    vals.splice(vals.indexOf(extra[a]),1);
-		    //console.log(vals);
-	    }
-	    //console.log(vals);
+			document.body.removeChild(document.getElementById(vals[vals.indexOf(extra[i])]));
+			//vals.splice(vals.indexOf(extra[i]))
+			//console.log(vals.indexOf(extra[i]))
+		}
+
+		for (var a = 0; a < extra.length; a++) {
+			vals.splice(vals.indexOf(extra[a]), 1);
+			//console.log(vals);
+		}
+		//console.log(vals);
         
-    }else{
+    } else {
         vals = vals.concat(extra);
         for (var b = 0; b < extra.length; b++) {
-		    var inputElement = document.createElement("input");
-	        inputElement.id = extra[b];
-	        document.body.appendChild(inputElement);
-		inputElement.onchange = function() {checkFull()};
-	    }
+			var inputElement = document.createElement("input");
+			inputElement.id = extra[b];
+			document.body.appendChild(inputElement);
+			inputElement.onchange = function () { checkFull() };
+		}
         //console.log(vals);
     }
 }
 
-function appendInputs(elementId){
-	if(vals.indexOf(elementId) < (vals.length-ArrowStates.length)){
-	var inputElement = document.createElement("input");
-	inputElement.id = elementId;
-	document.body.appendChild(inputElement);
-	inputElement.onchange = function() {
-		checkFull()
+function appendInputs(elementId) {
+	if (vals.indexOf(elementId) < (vals.length - ArrowStates.length)) {
+		var inputElement = document.createElement("input");
+		inputElement.id = elementId;
+		document.body.appendChild(inputElement);
+		inputElement.onchange = function () {
+			checkFull()
 		};
 	}
 }
 
-window.onload = function(){
-	for(var i = 0; i < vals.length; i++){
+window.onload = function () {
+	for (var i = 0; i < vals.length; i++) {
 		appendInputs(vals[i]);
 	}
-	alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
+	//alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
 };
 
-function checkFull(){
-	for(var i = 0; i < vals.length; i++){
-		if(document.getElementById(vals[i]).value !== ""){
-			if(pracMode){
-				if(document.getElementById(vals[i]).value.toUpperCase() === vals[i]){
+function checkFull() {
+	for (var i = 0; i < vals.length; i++) {
+		if (document.getElementById(vals[i]).value !== "") {
+			if (pracMode) {
+				if (document.getElementById(vals[i]).value.toUpperCase() === vals[i]) {
 					document.getElementById(vals[i]).style.borderColor = "green";
-				}else{
+				} else {
 					document.getElementById(vals[i]).style.borderColor = "red";
 				}
-			}else{
+			} else {
 				document.getElementById(vals[i]).style.borderColor = "#555555";
 			}
-		}else{
+		} else {
 			document.getElementById(vals[i]).style.borderColor = "#000000";
 		}
 	}
-	for(var i = 0; i < ArrowStates.length; i++){
+	for (var i = 0; i < ArrowStates.length; i++) {
 		//console.log(document.getElementById(ArrowStates[i]).value);
-		if(document.getElementById(ArrowStates[i]).value !== ""){
-			if(pracMode){
-				if(document.getElementById(ArrowStates[i]).value.toUpperCase() === ArrowStates[i]){
+		if (document.getElementById(ArrowStates[i]).value !== "") {
+			if (pracMode) {
+				if (document.getElementById(ArrowStates[i]).value.toUpperCase() === ArrowStates[i]) {
 					//document.getElementById(vals[i]).style.borderColor = "green";
 					document.getElementsByTagName(ArrowStates[i].toLowerCase())[0].style.backgroundColor = "green";
-				}else{
+				} else {
 					//document.getElementById(vals[i]).style.borderColor = "red";
 					document.getElementsByTagName(ArrowStates[i].toLowerCase())[0].style.backgroundColor = "red";
 				}
-			}else{
+			} else {
 				document.getElementById(vals[i]).style.borderColor = "#555555";
 			}
-		}else{
-			if(pracMode){
+		} else {
+			if (pracMode) {
 				document.getElementsByTagName(ArrowStates[i].toLowerCase())[0].style.backgroundColor = "#000000";
-			}else{
+			} else {
 				document.getElementById(vals[i]).style.borderColor = "#000000";
 			}
-			
+
 		}
 	}
 }
 
-window.addEventListener("click",function(){
+window.addEventListener("click", function () {
 	checkFull();
 });
 
-function clearInputs(){
+function clearInputs() {
 	for (var i = 0; i < vals.length; i++) {
 		document.getElementById(vals[i]).value = "";
 		document.getElementById(vals[i]).style.borderColor = "#ffffff";
@@ -151,8 +151,8 @@ function clearInputs(){
 }
 
 function endGame() {
-	
-	alert("Score: "+score+" / " + vals.length + "\nWRONG: " + wrong);
+
+	alert("Score: " + score + " / " + vals.length + "\nWRONG: " + wrong);
 	score = 0;
 	for (var i = 0; i < vals.length; i++) {
 		document.getElementById(vals[i]).value = "";
@@ -163,39 +163,43 @@ function endGame() {
 	}
 }
 
-function submit(){
+function submit() {
 	wrong = [];
 	end = true;
 	checkFull()
 	var i = null;
 	for (i = 0; i < vals.length; i++) {
 		//document.getElementById(vals[i]).blur();
-    	if(document.getElementById(vals[i]).value.toUpperCase() === vals[i]){
+		if (document.getElementById(vals[i]).value.toUpperCase() === vals[i]) {
 			score++;
-			
-		}else{
+
+		} else {
 			wrong.push(vals[i]);
 		}
-		
-		if(document.getElementById(vals[i]).value === ""){
+
+		if (document.getElementById(vals[i]).value === "") {
 			document.getElementById(vals[i]).style.borderColor = "#dddd00";
 			end = false;
 		}
 	}
 	for (var i = 0; i < ArrowStates.length; i++) {
-		if(document.getElementById(ArrowStates[i]).value === ""){
+		if (document.getElementById(ArrowStates[i]).value === "") {
 			document.getElementsByTagName(ArrowStates[i].toLowerCase())[0].style.backgroundColor = "#dddd00";
 		}
 	}
-	if(!end){
+	if (!end) {
 		var dialog = confirm("You didn't enter a value for one or more states. Press OK to submit answers as they are or click CANCEL to continue working.");
-		if(dialog){
-		    endGame();
-		}else{
-		    score = 0;
+		if (dialog) {
+			endGame();
+		} else {
+			score = 0;
 			checkFull();
 		}
-	}else{
+	} else {
 		endGame();
 	}
+}
+function settings() {
+	console.log("settings button pressed");
+	document.getElementsByTagName("cover")[0].style.display = "initial";
 }
