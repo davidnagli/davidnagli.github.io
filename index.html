@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <!--
 	Prologue by HTML5 UP
 	html5up.net | @n33co
@@ -58,8 +58,8 @@
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Intro</span></a></li>
 								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Portfolio</span></a></li>
 								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
-								<!--<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
-							--></ul>
+								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+							</ul>
 						</nav>
 
 				</div>
@@ -88,14 +88,14 @@
 						<div class="container">
 
 							<header>
-								<h2 class="alt">Hi! I'm <strong>David</strong>, a young, hardworking <br />
-								student and web developer.</h2>
+								<h2 class="alt">Hi! I'm <strong>David</strong>, a hardworking student, <br />
+								DJ, and web developer.</h2>
 								<!--<p>I have been in love with coding for as long as I remember. Since I was 9, I have been learning diffrent programing langueges. Today, I am experianced in Javascript, HTML, CSS, PHP, and C# for Unity.</p>
 							-->
 							</header>
 
 							<footer>
-								<a href="#portfolio" class="button scrolly">My Portfolio</a>
+								<a href="#portfolio" class="button scrolly">My Games</a>
 							</footer>
 
 						</div>
@@ -106,7 +106,7 @@
 						<div class="container">
 
 							<header>
-								<h2>Portfolio</h2>
+								<h2>Games</h2>
 							</header>
 
 							<p>Recently, I decided to put my programming skills to the test and create a few games.</p>
@@ -164,25 +164,22 @@
 						</div>
 					</section>
 
-				<!-- Contact 
+				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">
 
 							<header>
-								<h2>Contact</h2>
+								<h2>Contact Me</h2>
 							</header>
 
-							<p>Elementum sem parturient nulla quam placerat viverra
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
+							<p>If you have any questions, have game requests, or want to hire me, please fill out and submit this form.</p>
 
-							<form method="post" action="#">
+							<form>
 								<div class="row">
-									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
+									<div class="6u 12u$(mobile)"><input type="text" name="subject" placeholder="Name" /></div>
+									<div class="6u$ 12u$(mobile)"><input type="text" name="cc" placeholder="Email" /></div>
 									<div class="12u$">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="body" placeholder="Message"></textarea>
 									</div>
 									<div class="12u$">
 										<input type="submit" value="Send Message" />
@@ -192,9 +189,19 @@
 
 						</div>
 					</section>
--->
 			</div>
+        <script>
+            function sendEmail() {
+                //window.open("mailto:name@email.com" + location.search);
+                alert("mailto:name@email.com" + location.search)
+            }
+           // window.onload = function () {
+                if (location.search != "") {
+                    location.replace("mailto:example@email.com" + location.search);
 
+                }
+            //}
+        </script>
 		<!-- Footer -->
 			<div id="footer">
 
