@@ -36,7 +36,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
 							<h1 id="title">David Nagli</h1>
-							<p>Dj and Software Engineer</p>
+							<p>Dj and Game Developer</p>
 						</div>
 
 					<!-- Nav -->
@@ -89,7 +89,7 @@
 
 							<header>
 								<h2 class="alt">Hi! I'm <strong>David</strong>, a hardworking student, <br />
-								DJ, and web developer.</h2>
+								DJ, and game developer.</h2>
 								<!--<p>I have been in love with coding for as long as I remember. Since I was 9, I have been learning diffrent programing langueges. Today, I am experianced in Javascript, HTML, CSS, PHP, and C# for Unity.</p>
 							-->
 							</header>
@@ -191,16 +191,9 @@
 					</section>
 			</div>
         <script>
-            function sendEmail() {
-                //window.open("mailto:name@email.com" + location.search);
-                alert("mailto:name@email.com" + location.search)
+            if (location.search != "") {
+                location.replace("mailto:davidnagli@gmail.com" + location.search);
             }
-           // window.onload = function () {
-                if (location.search != "") {
-                    location.replace("mailto:example@email.com" + location.search);
-
-                }
-            //}
         </script>
 		<!-- Footer -->
 			<div id="footer">
