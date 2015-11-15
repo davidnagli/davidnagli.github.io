@@ -11,13 +11,15 @@ TO DO:
 	^add timer
 */
 
-var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH", "VT"];
+var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH"];
+//var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH", "VT"];
 //var ArrowStates = [];
 
-var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA"];
+var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA","FL", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
+//var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA"];
 
-
-var vals = ["FL", "GA", "SC", "NC", "VA", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "NY", "PA", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
+var vals = ["GA", "SC", "NC", "VA", "NY", "PA"];
+// var vals = ["FL", "GA", "SC", "NC", "VA", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "NY", "PA", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
 
 var statesAmt = 0;
 
@@ -95,7 +97,7 @@ window.onload = function () {
 	for (var i = 0; i < vals.length; i++) {
 		appendInputs(vals[i]);
 	}
-	//alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
+	alert("To play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
 };
 
 function checkFull() {
