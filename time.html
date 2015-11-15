@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body{
+				display: none;
+			}
+		</style>
+		<title>Timer</title>
+		<link rel="icon" href="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Stopwatch-icon.png">
+		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <!--<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-blue.min.css" />-->
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+	</head>
+	<body>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+            mdl-layout--fixed-tabs">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Time App</span>
+    </div>
+    <!-- Tabs -->
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Stopwatch</a>
+      <a href="#fixed-tab-2" class="mdl-layout__tab">Timer</a>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+	<span class="mdl-layout-title">David Nagli</span>
+	<nav class="mdl-navigation">
+		<a class="mdl-navigation__link" href=".">Home</a>
+		<a class="mdl-navigation__link" href="./map">Map Game</a>
+		<a class="mdl-navigation__link" href="./ball">3D Ball Game</a>
+		<a class="mdl-navigation__link" href="./clasic">Clasic Arcade Ping Pong</a>
+		<a class="mdl-navigation__link" href="./tank">Tank Game</a>
+	</nav>
+  </div>
+  <main class="mdl-layout__content">
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+      <div class="page-content">
+		  
+		  
+		  
+		  <!-- Square card -->
+<style>
+.demo-card-square.mdl-card {
+  width: 100%;
+  height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ),
+	url('http://jsmdev.net/images/Main/fulls/07.jpg') #46B6AC;
+    background-position:50% 50%;
+	opacity: 1;
+}
+</style>
+
+<div class="demo-card-square mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 id="output" class="mdl-card__title-text">0 : 0</h2>
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <a id="startStopWatch" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
+      Start
+    </a>
+	<a id="reset" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+      Reset
+    </a>
+  </div>
+</div>
+	  </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+      <div class="page-content">
+		  <!-- Square card -->
+<style>
+.demo-card-square.mdl-card {
+  width: 100%;
+  height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ),
+	url('http://jsmdev.net/images/Main/fulls/07.jpg') #46B6AC;
+    background-position:50% 50%;
+	opacity: 1;
+}
+</style>
+
+<div class="demo-card-square mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">Sorry, this part is still under construction. Please check back soon.</h2>
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Start
+    </a>
+	<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Reset
+    </a>
+  </div>
+</div>
+	  </div>
+    </section>
+  </main>
+</div>
+<script>
+	document.body.onload = function(){
+    document.body.style.display = "initial";
+  }
+	
+  
+  
+  	//-1 so when on click time++ makes it 0
+			var time = -1;
+			var seconds = 0;
+			var minutes = 0;
+			var formatedTime = minutes + " : " + seconds;
+			var started = false;
+			
+			document.getElementById("startStopWatch").addEventListener("click",function()
+			{
+        if(!started){
+            this.innerHTML = "Pause";
+            countUp();
+            timer = setInterval(countUp,1000);
+				}else{
+					clearInterval(timer);
+					this.innerHTML = "Resume"
+				}
+				started = !started;
+				
+			});
+			
+			document.getElementById("reset").addEventListener("click",function()
+			{
+				started = false;
+				clearInterval(timer);
+				document.getElementById("startStopWatch").innerHTML = "Start";
+				time = -1;
+				minutes = 0;
+				countUp();
+			});
+			
+			function countUp()
+			{
+				time++;
+				
+				for(i = 0; i<time; i++){
+					if(time % (60*i) == 0){
+						minutes = i;
+					}
+				}
+				
+				if(minutes === 0){
+					seconds = time;
+				}else{
+					seconds = time % (60 * minutes);
+				}
+				
+				formatedTime = minutes +" : "+ seconds;
+				document.title = formatedTime;
+				document.getElementById("output").innerHTML = formatedTime;
+			}
+</script>
+	</body>
+</html>
