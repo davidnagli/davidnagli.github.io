@@ -81,37 +81,52 @@
       <div class="page-content">
 		   <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
 			   
-			   <div class="mdl-cell mdl-cell--1-col ">
+			   
+			   
+			   <div class="mdl-cell mdl-cell--2-col ">
 				   
-				   <br><br>
+				   <br><br><br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input1">
 						<label class="mdl-textfield__label" for="input1">Minutes</label>
 						<span class="mdl-textfield__error">Input is not a number!</span>
 					</div>
-					<a id="startStopWatch" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
+					<a id="startTimer" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
     					Start
 					</a>
-					
+					<a id="resetTimer" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+						Reset
+					</a>
 			   </div>
 			   
 			   
 			   
-			   <div class="mdl-cell mdl-cell--1-col ">
+			   <div class="mdl-cell mdl-cell--2-col ">
 				   
-				   <br><br>
+				   <br><br><br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input2">
 						<label class="mdl-textfield__label" for="input2">Seconds</label>
 						<span class="mdl-textfield__error">Input is not a number!</span>
 					</div>
-					<a id="reset" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-						Reset
-					</a>
+					
 					
 			   </div>
-			   <div class="mdl-cell mdl-cell--10-col mdl-color--grey-100">
-				   <h1 style="font-size:115px;">5:15</h1>					
+			   <style>
+				   #outputBox{
+					   -webkit-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
+-moz-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
+box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
+
+				   }
+				   
+				   .mdl-button{
+					   min-width: 40px;
+				   }
+				</style>
+			   
+			   <div class="mdl-cell mdl-cell--8-col mdl-color--white" id="outputBox">
+				   <h1 style="font-size:155px; text-align:center; vertical-align:middle;">5:15</h1>					
 			   </div>
 			   The count down timer function of this page is currently under construction, this section is not functional at this time.
 		   </div>
