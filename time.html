@@ -83,13 +83,15 @@
 			   
 			   <div class="mdl-cell mdl-cell--1-col ">
 				   
-				   
+				   <br><br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input1">
 						<label class="mdl-textfield__label" for="input1">Minutes</label>
 						<span class="mdl-textfield__error">Input is not a number!</span>
 					</div>
-					<br><br>
+					<a id="startStopWatch" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
+    					Start
+					</a>
 					
 			   </div>
 			   
@@ -97,25 +99,39 @@
 			   
 			   <div class="mdl-cell mdl-cell--1-col ">
 				   
-				   
+				   <br><br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input2">
 						<label class="mdl-textfield__label" for="input2">Seconds</label>
 						<span class="mdl-textfield__error">Input is not a number!</span>
 					</div>
-					<br><br>
+					<a id="reset" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+						Reset
+					</a>
 					
 			   </div>
-			   <div class="mdl-cell mdl-cell--5-col">
-				   I'm currently building this section of this webpage, please check back soon.
+			   <div class="mdl-cell mdl-cell--10-col mdl-color--grey-200">
+				   <h1 style="font-size:115px;">5:15</h1>					
 			   </div>
-			   
+			   The count down timer function of this page is currently under construction, this section is not functional at this time.
 		   </div>
 	  </div>
     </section>
   </main>
 </div>
 <script>
+	
+	/*
+	TO DO:
+	
+	*When start pressed check if stared already. AKA attempting to start a timer while stopwatch still running and vice versa
+	*When start pressed convert mins and secs to total seconds. Set interval, lower time by 1 every second, update DOM
+	 check if time is 0 and respond accordingly
+	 *Make reset do what it should
+	
+	
+	*/
+	
 	document.body.onload = function(){
     document.body.style.display = "initial";
   }
