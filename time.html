@@ -89,7 +89,7 @@
 							<br>
 							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 								<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inputMinutes">
-								<label class="mdl-textfield__label" for="input1">Minutes</label>
+								<label class="mdl-textfield__label" for="inputMinutes">Minutes</label>
 								<span class="mdl-textfield__error">Input is not a number!</span>
 							</div>
 							<a id="startTimer" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
@@ -106,10 +106,11 @@
 							<br>
 							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 								<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inputSeconds">
-								<label class="mdl-textfield__label" for="input2">Seconds</label>
+								<label class="mdl-textfield__label" for="inputSeconds">Seconds</label>
 								<span class="mdl-textfield__error">Input is not a number!</span>
 							</div>
 						</div>
+						
 						
 						
 
@@ -176,21 +177,69 @@
 			timerReset();	
 		}
 		
+		var anyErrors = false;
+		
 		document.getElementById("inputMinutes").onchange = function(){
-			timerReset();
+			var error = false;
+			
+			for(i = 0; i <= this.parentElement.classList.length; i++){
+				if(this.parentElement.classList[i] == "is-invalid"){
+					error = true;
+				}
+			}
+			
+			if(error){
+				alert("Minutes value is not a number!");
+				anyErrors = true;
+			}else{
+				timerReset();
+			}	
 		}
 		
 		document.getElementById("inputSeconds").onchange = function(){
-			timerReset();
+			var error = false;
+			anyErrors = true;
+			
+			for(i = 0; i <= this.parentElement.classList.length; i++){
+				if(this.parentElement.classList[i] == "is-invalid"){
+					error = true;
+				}
+			}
+			
+			if(error){
+				alert("Seconds value is not a number!");
+				anyErrors = true;
+			}else{
+				timerReset();
+			}
 		}
 		
+		
 		window.onkeydown = function(event){
-			console.log(event.keyCode);
-			console.log("Boolean Value: " + (event.keyCode == 13))
 			if(event.keyCode == 13){
 				event.preventDefault();
-				timerReset();
-				document.getElementById("startTimer").click();
+				
+				/*
+				var sError = false;
+				for(i = 0; i <= document.getElementById("inputSeconds").parentElement.classList.length; i++){
+					if(document.getElementById("inputSeconds").parentElement.classList[i] == "is-invalid"){
+						sError = true;
+					}
+				}
+				
+				if(sError){
+					alert("Seconds value is not a number!");
+				}
+				if(!sError){
+					timerReset();
+				}
+				*/
+				document.getElementById("inputSeconds").blur();
+				if(!anyErrors){
+					timerReset();
+					document.getElementById("startTimer").click();
+				}
+				
 			}
 		}
 		
