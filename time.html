@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<style>
 		/* Changed later in JS... to prevent weird effect in page while still loading*/
@@ -117,7 +116,7 @@
 						<div class="mdl-cell mdl-cell--7-col mdl-color--white" id="outputBox">
 							<h1 id="timerOutput" style="font-size:155px; text-align:center; vertical-align:middle;">0:0</h1>
 						</div>
-						The count down timer function of this page is currently under construction, all current features should work greate, but stay tuned for some feature updates.
+						<!--The count down timer function of this page is currently under construction, all current features should work greate, but stay tuned for some feature updates.-->
 					</div>
 				</div>
 			</section>
@@ -131,11 +130,17 @@
 			
 		document.getElementById("startTimer").onclick = function(){
 			if(!timerStarted){
+				//pause stopwatch if its running
+				if(started){
+					document.getElementById("startStopWatch").click();
+				}
 				timerStarted = true;
 				document.getElementById("startTimer").innerHTML = "Pause";
-				if(!tSeconds){
-					setSeconds();
-				}
+				
+				//oringinally had an if(!tSeconds) but I removed it because it seems useless
+				setSeconds
+				
+				//start counting down
 				timerInterval = setInterval(countDown,1000);
 			}else{
 				timerStarted = false;
@@ -160,6 +165,7 @@
 		function countDown(){
 			tSeconds--;
 			document.getElementById("timerOutput").innerHTML = formatTime(tSeconds).ftime;
+			document.title = formatTime(tSeconds).ftime;
 			if(tSeconds <= 0){
 				alert("Time's Up!");
 				timerReset();
@@ -198,7 +204,6 @@
 		
 		document.getElementById("inputSeconds").onchange = function(){
 			var error = false;
-			anyErrors = true;
 			
 			for(i = 0; i <= this.parentElement.classList.length; i++){
 				if(this.parentElement.classList[i] == "is-invalid"){
@@ -218,22 +223,6 @@
 		window.onkeydown = function(event){
 			if(event.keyCode == 13){
 				event.preventDefault();
-				
-				/*
-				var sError = false;
-				for(i = 0; i <= document.getElementById("inputSeconds").parentElement.classList.length; i++){
-					if(document.getElementById("inputSeconds").parentElement.classList[i] == "is-invalid"){
-						sError = true;
-					}
-				}
-				
-				if(sError){
-					alert("Seconds value is not a number!");
-				}
-				if(!sError){
-					timerReset();
-				}
-				*/
 				document.getElementById("inputSeconds").blur();
 				if(!anyErrors){
 					timerReset();
@@ -243,23 +232,10 @@
 			}
 		}
 		
-		
-		
-		
-		/*
-		TO DO:
-		
-		*When start pressed check if stared already. AKA attempting to start a timer while stopwatch still running and vice versa
-		
-		
-		*/
-		
 		document.body.onload = function(){
 			document.body.style.display = "initial";
 		}
-		
-	
-	
+
   		//-1 so when on click time++ makes it 0
 		var time = -1;
 		var seconds = 0;
@@ -268,6 +244,10 @@
 			
 		document.getElementById("startStopWatch").addEventListener("click",function(){
 			if(!started){
+				//if user starts the stopwatch while timer is still running, then press the pause button on the timer
+				if(timerStarted){
+					document.getElementById("startTimer").click();
+				}
 				this.innerHTML = "Pause";
 				countUp();
 				timer = setInterval(countUp,1000);
@@ -323,8 +303,12 @@
 		}
 		
 		window.addEventListener("beforeunload", function (event) {
-			if(time > 0){
-				event.returnValue = "WARNING: Exiting will cause all stopwatch data to be lost.";
+			if(time > 0 && tSeconds > 0){
+				event.returnValue = "**************************************************************\nWARNING: This will cause all stopwatch and timer data to be lost!\n**************************************************************";
+			}else if(time > 0){
+				event.returnValue = "**************************************************************\nWARNING: This will cause all stopwatch data to be lost!\n**************************************************************";
+			}else if(timerStarted){
+				event.returnValue = "**************************************************************\nWARNING: This will cause all timer data to be lost!\n**************************************************************";
 			}
 		});
 	</script>
