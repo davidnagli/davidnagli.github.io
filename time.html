@@ -1,251 +1,283 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<style>
-			body{
-				display: none;
-			}
-		</style>
-		<title>Timer</title>
-		<link rel="icon" href="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Stopwatch-icon.png">
-		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
-    <!--<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-blue.min.css" />-->
-		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-	</head>
-	<body>
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+
+<head>
+	<style>
+		/* Changed later in JS... to prevent weird effect in page while still loading*/
+		body {
+			display: none;
+		}
+		
+		.demo-card-square.mdl-card {
+			width: 100%;
+			height: 320px;
+		}
+		
+		.demo-card-square > .mdl-card__title {
+			color: #fff;
+			background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://jsmdev.net/images/Main/fulls/07.jpg') #46B6AC;
+			background-position: 50% 50%;
+			opacity: 1;
+		}
+		#outputBox {
+			-webkit-box-shadow: inset 0px 0px 10px -1px rgba(0, 0, 0, 0.11);
+			-moz-box-shadow: inset 0px 0px 10px -1px rgba(0, 0, 0, 0.11);
+			box-shadow: inset 0px 0px 10px -1px rgba(0, 0, 0, 0.11);
+		}
+		
+		.mdl-button {
+			min-width: 40px;
+			padding: 0px 12px;
+		}
+	</style>
+	<title>Timer</title>
+	<link rel="icon" href="http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Stopwatch-icon.png">
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+</head>
+<body>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
             mdl-layout--fixed-tabs">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Time App</span>
-    </div>
-    <!-- Tabs -->
-    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Stopwatch</a>
-      <a href="#fixed-tab-2" class="mdl-layout__tab">Timer</a>
-    </div>
-  </header>
-  <div class="mdl-layout__drawer">
-	<span class="mdl-layout-title">David Nagli</span>
-	<nav class="mdl-navigation">
-		<a class="mdl-navigation__link" href=".">Home</a>
-		<a class="mdl-navigation__link" href="./map">Map Game</a>
-		<a class="mdl-navigation__link" href="./ball">3D Ball Game</a>
-		<a class="mdl-navigation__link" href="./clasic">Clasic Arcade Ping Pong</a>
-		<a class="mdl-navigation__link" href="./tank">Tank Game</a>
-	</nav>
-  </div>
-  <main class="mdl-layout__content mdl-color--grey-100">
-    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-      <div class="page-content">
-		  
-		  
-		  
-		  <!-- Square card -->
-<style>
-.demo-card-square.mdl-card {
-  width: 100%;
-  height: 320px;
-}
-.demo-card-square > .mdl-card__title {
-  color: #fff;
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.7), 
-      rgba(0, 0, 0, 0.7)
-    ),
-	url('http://jsmdev.net/images/Main/fulls/07.jpg') #46B6AC;
-    background-position:50% 50%;
-	opacity: 1;
-}
-</style>
-
-<div class="demo-card-square mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title mdl-card--expand">
-    <h2 id="output" class="mdl-card__title-text">0 : 0</h2>
-  </div>
-  <div class="mdl-card__actions mdl-card--border">
-    <a id="startStopWatch" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
-      Start
-    </a>
-	<a id="reset" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-      Reset
-    </a>
-  </div>
-</div>
-	  </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-      <div class="page-content">
-		   <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-			   
-			   
-			   
-			   <div class="mdl-cell mdl-cell--2-col ">
-				   
-				   <br><br><br>
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input1">
-						<label class="mdl-textfield__label" for="input1">Minutes</label>
-						<span class="mdl-textfield__error">Input is not a number!</span>
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Time App</span>
+			</div>
+			<!-- Tabs -->
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+				<a href="#fixed-tab-1" class="mdl-layout__tab is-active">Stopwatch</a>
+				<a href="#fixed-tab-2" class="mdl-layout__tab">Timer</a>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">David Nagli</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href=".">Home</a>
+				<a class="mdl-navigation__link" href="./map">Map Game</a>
+				<a class="mdl-navigation__link" href="./ball">3D Ball Game</a>
+				<a class="mdl-navigation__link" href="./clasic">Clasic Arcade Ping Pong</a>
+				<a class="mdl-navigation__link" href="./tank">Tank Game</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content mdl-color--grey-100">
+			<section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+				<div class="page-content">
+					<!-- Square card -->
+					<div class="demo-card-square mdl-card mdl-shadow--2dp">
+						<div class="mdl-card__title mdl-card--expand">
+							<h2 id="output" class="mdl-card__title-text">0 : 0</h2>
+						</div>
+						<div class="mdl-card__actions mdl-card--border">
+							<a id="startStopWatch" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
+      							Start
+    						</a>
+							<a id="reset" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+    							Reset
+    						</a>
+						</div>
 					</div>
-					<a id="startTimer" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
-    					Start
-					</a>
-					<a id="resetTimer" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-						Reset
-					</a>
-			   </div>
-			   
-			   
-			   
-			   <div class="mdl-cell mdl-cell--2-col ">
-				   
-				   <br><br><br>
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input2">
-						<label class="mdl-textfield__label" for="input2">Seconds</label>
-						<span class="mdl-textfield__error">Input is not a number!</span>
-					</div>
-					
-					
-			   </div>
-			   <style>
-				   #outputBox{
-					   -webkit-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
--moz-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
-box-shadow: inset 0px 0px 10px -1px rgba(0,0,0,0.11);
+				</div>
+			</section>	
+			<section class="mdl-layout__tab-panel" id="fixed-tab-2">
+				<div class="page-content">
+					<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+						<div class="mdl-cell mdl-cell--2-col ">
+							<br>
+							<br>
+							<br>
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inputMinutes">
+								<label class="mdl-textfield__label" for="input1">Minutes</label>
+								<span class="mdl-textfield__error">Input is not a number!</span>
+							</div>
+							<a id="startTimer" class="mdl-button mdl-button--colored mdl-js-button mdl-button--raised">
+    							Start
+							</a>
+							<a id="resetTimer" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+								Reset
+							</a>
+						</div>
+						
+						<div class="mdl-cell mdl-cell--2-col ">
+							<br>
+							<br>
+							<br>
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inputSeconds">
+								<label class="mdl-textfield__label" for="input2">Seconds</label>
+								<span class="mdl-textfield__error">Input is not a number!</span>
+							</div>
+						</div>
+						
+						
 
-				   }
-				   
-				   .mdl-button{
-					   min-width: 40px;
-					   padding: 0px 12px;
-				   }
-				</style>
-			   
-			   <div class="mdl-cell mdl-cell--7-col mdl-color--white" id="outputBox">
-				   <h1 style="font-size:155px; text-align:center; vertical-align:middle;">5:15</h1>					
-			   </div>
-			   The count down timer function of this page is currently under construction, this section is not functional at this time.
-		   </div>
-	  </div>
-    </section>
-  </main>
-</div>
-<script>
-	
-	/*
-	TO DO:
-	
-	*When start pressed check if stared already. AKA attempting to start a timer while stopwatch still running and vice versa
-	*When start pressed convert mins and secs to total seconds. Set interval, lower time by 1 every second, update DOM
-	 check if time is 0 and respond accordingly
-	 *Make reset do what it should
-	
-	
-	*/
-	
-	document.body.onload = function(){
-    document.body.style.display = "initial";
-  }
-	
-  
-  
-  	//-1 so when on click time++ makes it 0
-			var time = -1;
-			var seconds = 0;
-			var minutes = 0;
-			var formatedTime = minutes + " : " + seconds;
-			var started = false;
+						<div class="mdl-cell mdl-cell--7-col mdl-color--white" id="outputBox">
+							<h1 id="timerOutput" style="font-size:155px; text-align:center; vertical-align:middle;">0:0</h1>
+						</div>
+						The count down timer function of this page is currently under construction, all current features should work greate, but stay tuned for some feature updates.
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+	<script>
+		
+		var tSeconds = 0;
+		var timerStarted = false;
+		var timerInterval;
 			
-			document.getElementById("startStopWatch").addEventListener("click",function()
-			{
-        if(!started){
-            this.innerHTML = "Pause";
-            countUp();
-            timer = setInterval(countUp,1000);
-				}else{
-					clearInterval(timer);
-					this.innerHTML = "Resume"
+		document.getElementById("startTimer").onclick = function(){
+			if(!timerStarted){
+				timerStarted = true;
+				document.getElementById("startTimer").innerHTML = "Pause";
+				if(!tSeconds){
+					setSeconds();
 				}
-				started = !started;
-				
-			});
+				timerInterval = setInterval(countDown,1000);
+			}else{
+				timerStarted = false;
+				clearInterval(timerInterval);
+				document.getElementById("startTimer").innerHTML = "Resume";
+			}
+		}
+	
+		function setSeconds(){
+			var mins = document.getElementById("inputMinutes").value;
+			var secs = document.getElementById("inputSeconds").value;
+			if(!mins){
+				mins = 0;
+			}
+			if(!secs){
+				secs = 0;
+			}
+			tSeconds = parseInt(mins) * 60 + parseInt(secs);
+			document.getElementById("timerOutput").innerHTML = formatTime(tSeconds).ftime;
+		}
+		
+		function countDown(){
+			tSeconds--;
+			document.getElementById("timerOutput").innerHTML = formatTime(tSeconds).ftime;
+			if(tSeconds <= 0){
+				alert("Time's Up!");
+				timerReset();
+			}
+		}
+	
+		function timerReset(){
+			clearInterval(timerInterval);
+			timerStarted = false;
+			setSeconds();
+			document.getElementById("startTimer").innerHTML = "Start";	
+		}
+		
+		document.getElementById("resetTimer").onclick = function(){
+			timerReset();	
+		}
+		
+		document.getElementById("inputMinutes").onchange = function(){
+			timerReset();
+		}
+		
+		document.getElementById("inputSeconds").onchange = function(){
+			timerReset();
+		}
+		
+		window.onkeydown = function(event){
+			console.log(event.keyCode);
+			console.log("Boolean Value: " + (event.keyCode == 13))
+			if(event.keyCode == 13){
+				event.preventDefault();
+				timerReset();
+				document.getElementById("startTimer").click();
+			}
+		}
+		
+		
+		
+		
+		/*
+		TO DO:
+		
+		*When start pressed check if stared already. AKA attempting to start a timer while stopwatch still running and vice versa
+		
+		
+		*/
+		
+		document.body.onload = function(){
+			document.body.style.display = "initial";
+		}
+		
+	
+	
+  		//-1 so when on click time++ makes it 0
+		var time = -1;
+		var seconds = 0;
+		var minutes = 0;
+		var started = false;
 			
-			document.getElementById("reset").addEventListener("click",function()
-			{
-				started = false;
-				clearInterval(timer);
-				document.getElementById("startStopWatch").innerHTML = "Start";
-				time = -1;
-				minutes = 0;
+		document.getElementById("startStopWatch").addEventListener("click",function(){
+			if(!started){
+				this.innerHTML = "Pause";
 				countUp();
-			});
+				timer = setInterval(countUp,1000);
+			}else{
+				clearInterval(timer);
+				this.innerHTML = "Resume"
+			}
+			started = !started;
+		});
+		
+					
+		document.getElementById("reset").addEventListener("click",function(){
+			started = false;
+			clearInterval(timer);
+			document.getElementById("startStopWatch").innerHTML = "Start";
+			time = -1;
+			minutes = 0;
+			countUp();
+		});
 			
-			function countUp()
-			{
-				time++;
-				/*
-				for(i = 0; i<time; i++){
-					if(time % (60*i) == 0){
-						minutes = i;
+		function countUp(){
+			time++;
+			document.getElementById("output").innerHTML = document.title = formatTime(time).ftime;
+		}
+			
+		function formatTime(uSeconds){
+			var fMinutes = 0;
+			var fSeconds = 0;
+			
+			//for every second including and leading up to the current second
+			for(var tempSecond = 0; tempSecond <= uSeconds; tempSecond++){
+				//check if it's one of 60s multiples
+				for(a = 0; a <= tempSecond; a++){
+					if(tempSecond % (60 * a) == 0){
+						fMinutes = a;
 					}
 				}
-				
-				if(minutes === 0){
-					seconds = time;
-				}else{
-					seconds = time % (60 * minutes);
-				}
-				*/
-				
-				document.getElementById("output").innerHTML = document.title = formatTime(time).ftime;
 			}
 			
-			
-			function test(){
-				
+			if(!minutes){
+				fSeconds = uSeconds - 60 * fMinutes;
+			}else{
+				fSeconds = uSeconds;
 			}
 			
-			function formatTime(uSeconds){
-				var fMinutes = 0;
-				var fSeconds = 0;
-				
-				//for every second including and leading up to the current second
-				for(var tempSecond = 0; tempSecond <= uSeconds; tempSecond++){
-					//check if it's one of 60s multiples
-					for(a = 0; a <= tempSecond; a++){
-						if(tempSecond % (60 * a) == 0){
-							fMinutes = a;
-						}
-					}
-				}
-				
-				if(!minutes){
-					fSeconds = uSeconds - 60 * fMinutes;
-				}else{
-					fSeconds = uSeconds;
-				}
-				
-				var obj = {
-					minutes: fMinutes,
-					seconds: fSeconds,
-					ftime: fMinutes + " : " + fSeconds
-				}
-				
-				return obj;
+			var obj = {
+				minutes: fMinutes,
+				seconds: fSeconds,
+				ftime: fMinutes + " : " + fSeconds
 			}
 			
-			
-			window.addEventListener("beforeunload", function (event) {
-				if(time > 0){
-					event.returnValue = "WARNING: Exiting will cause all stopwatch data to be lost.";
-				}
-			});
-			
-</script>
-	</body>
+			return obj;
+		}
+		
+		window.addEventListener("beforeunload", function (event) {
+			if(time > 0){
+				event.returnValue = "WARNING: Exiting will cause all stopwatch data to be lost.";
+			}
+		});
+	</script>
+</body>
 </html>
