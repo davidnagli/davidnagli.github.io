@@ -124,6 +124,20 @@
 		</main>
 	</div>
 	<script>
+/* Features of this app
+		* Stopwatch (self explanitory)
+		* Takes user input to set a timer
+		* Pressing the reset button if the timer isn't running cleares the input feilds
+		* Displays output to the title, which is shown on the tab, usefull for setting a timer in the background
+		* If user attemptes to start a timer while stopwatch, then the timer is paused and the stopwatch can be started
+		* Same thing ^ works in vice versa
+		* Timer checks if user input is only numeric, if not it alerts them but allows them
+		* If the user tries again and program detects the same error then no alert is shown, program truncates string at non-numeric char and converts that to int
+		* And of course a gorgeous UI via matirial design light library
+*/
+		
+		
+		
 		
 		var tSeconds = 0;
 		var timerStarted = false;
@@ -174,9 +188,20 @@
 		}
 	
 		function timerReset(){
-			clearInterval(timerInterval);
-			timerStarted = false;
-			setSeconds();
+            if(timerStarted){
+                clearInterval(timerInterval);
+                timerStarted = false;
+				setSeconds();
+            }else{
+				document.getElementById("inputMinutes").value = "";
+				document.getElementById("inputSeconds").value = "";
+				
+				document.getElementById("inputMinutes").parentElement.classList.remove("is-dirty");
+				document.getElementById("inputSeconds").parentElement.classList.remove("is-dirty");
+				
+				setSeconds();
+			}
+			
 			document.getElementById("startTimer").innerHTML = "Start";	
 		}
 		
@@ -196,10 +221,10 @@
 			}
 			
 			if(error){
-				alert("Minutes value is not a number!");
+				alert("Minutes value is not a number! All numbers following the non-numeric charecter will be ignored.");
 				anyErrors = true;
 			}else{
-				timerReset();
+				setSeconds();
 			}	
 		}
 		
@@ -213,10 +238,10 @@
 			}
 			
 			if(error){
-				alert("Seconds value is not a number!");
+				alert("Seconds value is not a number! All numbers following the non-numeric charecter will be ignored.");
 				anyErrors = true;
 			}else{
-				timerReset();
+                setSeconds();
 			}
 		}
 		
@@ -226,7 +251,7 @@
 				event.preventDefault();
 				document.getElementById("inputSeconds").blur();
 				if(!anyErrors){
-					timerReset();
+					setSeconds();
 					document.getElementById("startTimer").click();
 				}
 				
