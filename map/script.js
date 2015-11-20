@@ -11,14 +11,14 @@ TO DO:
 	^add timer
 */
 
-var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH"];
-//var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH", "VT"];
+//var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH"];
+var ArrowStates = ["MD", "DE", "NJ", "CT", "RI", "MA", "NH", "VT"];
 //var ArrowStates = [];
 
-var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA","FL", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
+var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA","FL", "WV", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "ME", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
 //var extra = ["OK", "NM", "AZ", "NV", "UT", "CO", "ID", "MT", "WY", "ND", "SD", "NE", "WA"];
 
-var vals = ["GA", "SC", "NC", "VA", "NY", "PA"];
+var vals = ["GA", "SC", "NC", "VA", "NY", "PA", "TN", "KY"];
 // var vals = ["FL", "GA", "SC", "NC", "VA", "WV", "TN", "AL", "MS", "AR", "LA", "TX", "CA", "KS", "MO", "KY", "ME", "NY", "PA", "OH", "MI", "IN", "IL", "WI", "MN", "OR", "IA"];
 
 var statesAmt = 0;
