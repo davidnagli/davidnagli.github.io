@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Play Slope WebGL game online - Y8.com</title>
+		<link rel="icon" href="http://img-ak.y8.com/assets/y8/favicon-fa6f932c66809eb909884d5a6eb0239b.ico">
+		<style>
+			img{
+				width:100%;
+				position:absolute;
+				display:none;
+				left:0px;
+				top:0px;
+			}
+			body{
+				margin: 0px;
+				overflow:hidden;
+			}
+			
+			iframe{
+				position: absolute;
+				width:100%;
+			}
+		</style>
+		
+	</head>
+	<body>
+		
+		<iframe src="http://www.y8.com/games/slope_webgl" frameborder="0"></iframe>
+		<img src="https://s-media-cache-ak0.pinimg.com/originals/fc/85/68/fc8568c6a205f1f5c1ea75069612d3a3.jpg">
+		<audio>
+		  <source src="sound.mp3" type="audio/mpeg">
+		</audio>
+		
+		
+		<script>
+		document.getElementsByTagName('iframe')[0].height = window.innerHeight + "px";
+		setTimeout(function(){
+			document.getElementsByTagName('img')[0].style.display = "initial";
+			setTimeout(function(){
+				document.getElementsByTagName('audio')[0].play();
+			},400)
+		},10000)
+		</script>
+	</body>
+</html>
