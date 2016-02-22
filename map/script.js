@@ -69,7 +69,7 @@ function toggleStates() {
 			//console.log(vals);
 		}
 		//console.log(vals);
-        
+
     } else {
         vals = vals.concat(extra);
         for (var b = 0; b < extra.length; b++) {
@@ -98,7 +98,7 @@ window.onload = function () {
 		appendInputs(vals[i]);
 	}
 	//alert("WARNING: THIS GAME DOES NOT ALWAYS WORK ON MOBILE DEVICES. PLEASE ACCESS IT FROM A COMPUTER \n \nTo play enter the US Postal abreviations for as many states as you can. Then press DONE when you are finished \n \n P.S. Check the checkbox in the upper left corner to hide all the states that you don't need to know for Ms.Eizenbaum's class.");
-	var document.getElementById("showHide").checked = confirm("Would you like to hide all states that are unnessary for Ms. Eizenbaum's class?");
+	document.getElementById("showHide").checked = confirm("Would you like to hide all states that are unnessary for Ms. Eizenbaum's class?");
 	toggleStates()
 };
 
