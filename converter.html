@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>David Nagli's Base Converter</title>
+        <style>
+        body {
+font-family: sans-serif;
+/*Remove the following if running outside of JS Fiddle which changes the color to gray*/
+background-color: white;
+}
+
+#container {
+display: inline-block;
+margin: 20px;
+padding: 15px;
+-webkit-box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.75);
+-moz-box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.75);
+box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.75);
+}
+
+input {
+font-size: 15px;
+padding: 2px;
+outline-color: transparent;
+outline-style: none;
+}
+
+.formRow {
+margin-bottom: 15px;
+}
+
+button {
+font-size: 16px;
+padding: 10px;
+width: 100%;
+}
+
+#resultNumber {}
+
+        </style>
+    </head>
+    <body>
+        <h1>David Nagli's Base Converter</h1>
+        <div id="container">
+            <div class="formRow">
+                <label>
+                    Original:&nbsp;&nbsp;
+                    <input type="text" placeholder="Number" id="originalNumber" />
+                    <input type="text" placeholder="Base" id="originalBase" />
+                </label>
+            </div>
+
+            <div class="formRow">
+                <span id="resultNumber"></span>
+            </div>
+
+            <div>
+                <button id="calculateButton">
+                    Calculate
+                </button>
+            </div>
+        </div>
+        <script>
+        function convertBase(number, originalBase, resultBase) {
+var decimal = parseInt(number, originalBase);
+var result = decimal.toString(resultBase);
+
+return result;
+}
+
+document.getElementById("calculateButton").onclick = function() {
+var originalNumber = document.getElementById("originalNumber").value;
+var originalBase = document.getElementById("originalBase").value;
+var result = "Binary: "+convertBase(originalNumber, originalBase, 2)+"<br/>Octal: "+convertBase(originalNumber, originalBase, 8)+"<br/>Decimal: "+convertBase(originalNumber, originalBase, 10)+"<br/>Hexadecimal: "+convertBase(originalNumber, originalBase, 16);
+document.getElementById("resultNumber").innerHTML = result;
+
+
+}
+
+        </script>
+    </body>
+</html>
