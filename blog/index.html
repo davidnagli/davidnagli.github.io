@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Blog</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--[if lte IE 8]>
+    <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+
+    <!--Icons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script>
+        /*window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+            alert("Error occured: " + errorMsg);//or any message
+            return false;
+        };*/
+
+        window.addEventListener("load", function () {
+            var images = htmlCollectionToArray(document.getElementsByClassName("image"));
+            var i = 0;
+
+            for (var image of images) {
+                var id = "image" + i;
+                image.id = id;
+                i++;
+
+                var imageElement = image.childNodes[1];
+
+                var averageColor = getAverageRGB(imageElement);
+                var stylesheet = document.createElement("style");
+                var selector = "#" + id + ":before";
+                var rule = "background-color:rgb(" + averageColor.r + "," + averageColor.g + "," + averageColor.b + ")";
+                stylesheet.innerHTML = selector + "{" + rule + "}";
+                document.head.appendChild(stylesheet);
+
+                imageElement.style.height = (window.innerHeight / 2) + "px";
+            }
+
+            document.getElementById("contactMe").onsubmit = function () {
+                alert("Sorry but the contact form feature is not currently functional please email me at davidnagli@gmail.com")
+                //prevent form from submitting
+                return false;
+            }
+        });
+
+        function getAverageRGB(imgEl) {
+
+            var blockSize = 5, // only visit every 5 pixels
+                    defaultRGB = {r: 0, g: 0, b: 0}, // for non-supporting envs
+                    canvas = document.createElement('canvas'),
+                    context = canvas.getContext && canvas.getContext('2d'),
+                    data, width, height,
+                    i = -4,
+                    length,
+                    rgb = {r: 0, g: 0, b: 0},
+                    count = 0;
+
+            if (!context) {
+                return defaultRGB;
+            }
+
+            height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+            width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+            context.drawImage(imgEl, 0, 0);
+
+            try {
+                data = context.getImageData(0, 0, width, height);
+            } catch (e) {
+                /* security error, img on diff domain */
+                alert('x');
+                return defaultRGB;
+            }
+
+            length = data.data.length;
+
+            while ((i += blockSize * 4) < length) {
+                ++count;
+                rgb.r += data.data[i];
+                rgb.g += data.data[i + 1];
+                rgb.b += data.data[i + 2];
+            }
+
+            // ~~ used to floor values
+            rgb.r = ~~(rgb.r / count);
+            rgb.g = ~~(rgb.g / count);
+            rgb.b = ~~(rgb.b / count);
+
+            return rgb;
+
+        }
+
+        function htmlCollectionToArray(htmlCollection) {
+            return [].slice.call(htmlCollection);
+        }
+    </script>
+
+</head>
+<body>
+<!-- Wrapper -->
+<div id="wrapper">
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <header>
+                <h1>10th Grade Personal Project Blog</h1>
+                <p>This blog will act as my journal for my journal for the 10th Grade IB Personal Project. This blog
+                    will be used to document my thinking, problem-solving, iterating, and outlining for my project. This
+                    blog will include posts on various topics including conversations, research, problem-solving, and
+                    iterations of the product.</p>
+            </header>
+            <section class="tiles">
+                <!--<article>
+                    <span class="image">
+                        <img src="images/pic04.jpg" alt=""/>
+                    </span>
+                    <a href="generic.html">
+                        <h2>Post 4</h2>
+                        <div class="content">
+                            <p>Another Post</p>
+                        </div>
+                    </a>
+                </article>-->
+                <article>
+                    <span class="image">
+                        <img src="images/pic03.jpg" alt=""/>
+                    </span>
+                    <a href="generic.html">
+                        <h2>Post 3</h2>
+                        <div class="content">
+                            <p>Another Post</p>
+                        </div>
+                    </a>
+                </article>
+                <article>
+                    <span class="image">
+                        <img src="images/pic02.jpg" alt=""/>
+                    </span>
+                    <a href="generic.html">
+                        <h2>Post 2</h2>
+                        <div class="content">
+                            <p>Another Post</p>
+                        </div>
+                    </a>
+                </article>
+                <article>
+                    <span class="image">
+                        <img src="images/pic01.jpg" alt=""/>
+                    </span>
+                    <a href="generic.html">
+                        <h2>Getting Started</h2>
+                        <div class="content">
+                            <p>In this first post I will explain what I will talk about in this blog</p>
+                        </div>
+                    </a>
+                </article>
+                <!--<article class="style2">
+									<span class="image">
+										<img src="images/pic02.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Lorem</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style3">
+									<span class="image">
+										<img src="images/pic03.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Feugiat</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style4">
+									<span class="image">
+										<img src="images/pic04.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Tempus</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style5">
+									<span class="image">
+										<img src="images/pic05.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Aliquam</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style6">
+									<span class="image">
+										<img src="images/pic06.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Veroeros</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style2">
+									<span class="image">
+										<img src="images/pic07.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Ipsum</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style3">
+									<span class="image">
+										<img src="images/pic08.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Dolor</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style1">
+									<span class="image">
+										<img src="images/pic09.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Nullam</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style5">
+									<span class="image">
+										<img src="images/pic10.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Ultricies</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style6">
+									<span class="image">
+										<img src="images/pic11.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Dictum</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>
+                <article class="style4">
+									<span class="image">
+										<img src="images/pic12.jpg" alt=""/>
+									</span>
+                    <a href="generic.html">
+                        <h2>Pretium</h2>
+                        <div class="content">
+                            <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                        </div>
+                    </a>
+                </article>-->
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <h2>Get in touch <i>(Not functional)</i></h2>
+                <form method="GET" action="" id="contactMe">
+                    <div class="field half first">
+                        <input type="text" name="name" id="name" placeholder="Name"/>
+                    </div>
+                    <div class="field half">
+                        <input type="email" name="email" id="email" placeholder="Email"/>
+                    </div>
+                    <div class="field">
+                        <textarea name="message" id="message" placeholder="Message"></textarea>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send" class="special"/></li>
+                    </ul>
+                </form>
+            </section>
+            <section>
+                <h2>About Me</h2>
+                <p>
+                    I am a 10th grade student at Scheck Hillel. I'm currently 15 years old and I have been programming
+                    since I was 10. I've always found a passion for logical thinking and computers, and I fell in love
+                    with programming as soon as I tried it.
+                </p>
+            </section>
+            <ul class="copyright">
+                <li>&copy; David Nagli. All rights reserved</li>
+                <li style="font-size: 10px; float: right;">
+                    Design: <a href="http://html5up.net" style="border-bottom: none">HTML5 UP</a> &nbsp; |
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
